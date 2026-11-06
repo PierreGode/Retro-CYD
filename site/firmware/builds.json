@@ -1,7 +1,8 @@
 {
-  "version": "932c524",
-  "date": "2026-11-06T15:13:39Z",
-  "commit": "932c524",
+  "version": "1.0.0",
+  "build": 7,
+  "date": "2026-11-06T15:31:16Z",
+  "commit": "d2b70d6",
   "boards": [
     {
       "id": "cyd40",

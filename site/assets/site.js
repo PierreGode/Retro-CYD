@@ -271,7 +271,7 @@
 
     function renderBuildInfo() {
       if (buildsState === "ok" && builds) {
-        setText(vEl, builds.version || "—");
+        setText(vEl, (builds.version || "—") + (builds.build ? " · build " + builds.build : ""));
         setText(dEl, fmtDate(builds.date));
         if (cEl) {
           cEl.textContent = "";

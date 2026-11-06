@@ -247,7 +247,7 @@
         <ul>
           <li>Launching a <em>different</em> game takes a couple of seconds, with a progress bar.</li>
           <li>Relaunching the <em>same</em> game is instant — it's already in the cache.</li>
-          <li>The cache size is also the <strong>maximum ROM size: 2 MB</strong> (plus 64 KB). Every Game Boy ROM up to 2 MB fits; the few 4 MB and 8 MB titles don't.</li>
+          <li>The cache size is also the <strong>maximum ROM size: 2 MB</strong>. Every Game Boy ROM up to 2 MB fits; the few 4 MB and 8 MB titles don't.</li>
           <li><strong>ZIP files</strong> with a single ROM inside (deflate or stored) are unpacked straight into the cache.</li>
         </ul>
       </section>
@@ -409,6 +409,7 @@
         <h2 id="h-settings"><span class="num">09</span> Settings</h2>
         <dl class="defs">
           <dt>Wi-Fi</dt><dd>Choose, test or forget the Wi-Fi network used for game downloads. See <a href="#wifi">Wi-Fi &amp; free games</a>.</dd>
+          <dt>Firmware update</dt><dd>Checks the website for a newer version and installs it over Wi-Fi. See <a href="#updates">Updating</a>.</dd>
           <dt>Game downloads</dt><dd>Download new free games now, turn the automatic download at startup on or off, and pick the systems (NES, Game Boy, Game Boy Color, CHIP-8).</dd>
           <dt>Volume</dt><dd>Master sound volume.</dd>
           <dt>Brightness</dt><dd>Backlight level.</dd>
@@ -440,6 +441,15 @@
           <li>RetroCYD remembers what it downloaded (<code>/retrocyd/downloaded.txt</code>), so a game you delete stays deleted. <strong>Forget download history</strong> brings deleted games back on the next download.</li>
           <li>The full set is about 225 MB. The first download takes a while (expect several minutes); later checks only fetch what's new.</li>
           <li>Wi-Fi is only switched on for downloads and is <strong>always off while you play</strong>, so games get all of the RAM and CPU. If Wi-Fi leaves memory too fragmented, RetroCYD restarts itself once afterwards (you'll see a short message).</li>
+        </ul>
+        <h3 id="updates">Updating RetroCYD over Wi-Fi</h3>
+        <p>Open <strong>Settings → Firmware update → Check for update</strong>. If the website has a newer build, RetroCYD shows its version, downloads it (about 1.5 MB) and restarts twice; it takes about a minute. Your games, saves and settings stay. If <em>Download at startup</em> is on, the startup check also tells you when an update is available.</p>
+        <ul>
+          <li>Every version has a number like <code>1.0.0</code> and a build number. Updates are offered only for a higher build, never a downgrade.</li>
+          <li>The update is checked three ways before it is used: the download size and SHA-256 must match, and ESP-IDF checks the firmware image itself.</li>
+          <li><strong>Keep the board powered</strong> until the launcher is back. Even if it isn't, the board still starts: it keeps the last complete copy and finishes the update on the next start.</li>
+          <li>If a new version fails to start, the bootloader goes back to the previous one and RetroCYD tells you on the next start.</li>
+          <li>The rare update that changes the flash layout can't be installed over Wi-Fi; RetroCYD then asks you to use the <a href="index.html#flash">web flasher</a> instead. The web flasher can always reinstall RetroCYD.</li>
         </ul>
         <p><strong>About the stored password:</strong> the Wi-Fi password is saved in the board's settings area <em>without encryption</em>. Encrypting flash on an ESP32 means burning eFuses, which RetroCYD never does. Anyone holding the board could read it, so a guest network is a good idea.</p>
         <p class="muted">2.4 GHz networks only (the ESP32 has no 5 GHz radio). WPA2 and WPA3 personal networks and open networks work; enterprise (802.1X) networks and hotel-style sign-in pages don't.</p>
@@ -477,16 +487,16 @@
         </div>
 
         <h3 id="flash-layout">Flash layout (4 MB)</h3>
-        <div class="flashmap" role="img" aria-label="Flash layout: bootloader, partition table and NVS settings at the start, then a 1.9 megabyte app partition, then a 2.1 megabyte ROM cache.">
+        <div class="flashmap" role="img" aria-label="Flash layout: bootloader, partition table, settings and update data at the start, then a 1.9 megabyte firmware slot, then a 2 megabyte slot used as ROM cache and for downloading updates.">
           <div class="flashmap-bar" aria-hidden="true">
             <div class="fm-boot">BOOT</div>
-            <div class="fm-app">APP 1.9 MB</div>
-            <div class="fm-rom">ROM CACHE 2.1 MB</div>
+            <div class="fm-app">FIRMWARE 1.9 MB</div>
+            <div class="fm-rom">ROM CACHE / UPDATES 2 MB</div>
           </div>
           <ul class="flashmap-legend" aria-hidden="true">
             <li><i style="background:var(--magenta)"></i>Bootloader · partition table · NVS (settings)</li>
-            <li><i style="background:var(--cyan)"></i>Application — 1,920 KB at 0x10000</li>
-            <li><i style="background:var(--yellow)"></i>ROM cache — 2,112 KB at 0x1F0000</li>
+            <li><i style="background:var(--cyan)"></i>Firmware (app0) — 1,984 KB at 0x10000</li>
+            <li><i style="background:var(--yellow)"></i>ROM cache, also the download slot for updates (app1) — 2 MB at 0x200000</li>
           </ul>
         </div>
         <p class="muted">The web installer writes the bootloader (<code>0x1000</code>), partition table (<code>0x8000</code>) and app (<code>0x10000</code>) separately, so your settings survive updates. The merged download image starts at offset <code>0x0</code>. The ROM cache is filled at runtime when you launch a game.</p>
@@ -614,7 +624,7 @@
           </details>
           <details>
             <summary>What's the biggest ROM I can play?</summary>
-            <div class="a"><p>2 MB (plus 64 KB), the size of the ROM cache. Almost all NES, Game Boy and CHIP-8 homebrew is far smaller.</p></div>
+            <div class="a"><p>2 MB, the size of the ROM cache. Almost all NES, Game Boy and CHIP-8 homebrew is far smaller.</p></div>
           </details>
           <details>
             <summary>Does the ROM cache wear out the flash?</summary>
@@ -623,6 +633,10 @@
           <details>
             <summary>A NES game says “Mapper N not supported”</summary>
             <div class="a"><p>NES cartridges used different circuit boards (“mappers”). RetroCYD supports mappers 0 (NROM), 1 (MMC1), 2 (UxROM), 3 (CNROM), 4 (MMC3 / MMC6), 7 (AxROM), 9 (MMC2), 10 (MMC4), 11 (Color Dreams), 66 (GxROM) and 71 (Camerica). That covers most homebrew and most of the NES library. Games on other boards show this message and return to the browser; nothing is changed on the SD card.</p></div>
+          </details>
+          <details>
+            <summary>How do I update RetroCYD?</summary>
+            <div class="a"><p>On the board: <strong>Settings → Firmware update</strong> (needs Wi-Fi). From a computer: run the <a href="index.html#flash">web flasher</a> again without erasing; your settings and SD card are kept. <a href="#updates">More about updates.</a></p></div>
           </details>
           <details>
             <summary>Are the downloaded games legal?</summary>

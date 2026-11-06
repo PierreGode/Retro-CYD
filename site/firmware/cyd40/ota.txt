@@ -1,0 +1,7 @@
+version=1.0.0
+build=7
+layout=2
+size=1496704
+sha256=ea23964f20d5bd647f93eb47fb711fee0fc4e23a25296be58b0d5bfe7592f73a
+file=firmware.bin
+date=2026-11-06T15:31:16Z

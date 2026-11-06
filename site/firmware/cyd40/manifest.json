@@ -1,6 +1,6 @@
 {
   "name": "RetroCYD for 4.0\" ESP32-32E display (E32R40T / E32N40T, ST7796S 320x480)",
-  "version": "932c524",
+  "version": "1.0.0 (build 7)",
   "new_install_prompt_erase": true,
   "builds": [
     {
@@ -13,6 +13,10 @@
         {
           "path": "partitions.bin",
           "offset": 32768
+        },
+        {
+          "path": "otadata.bin",
+          "offset": 57344
         },
         {
           "path": "firmware.bin",

@@ -702,8 +702,8 @@ table.data tbody tr:hover { background: rgba(62, 240, 255, .03); }
   font-family: var(--font-pixel); font-size: .55rem; line-height: 1.5; color: #0c0c12;
 }
 .flashmap-bar .fm-boot { flex: 0 0 9%; background: var(--magenta); }
-.flashmap-bar .fm-app { flex: 1920 1 0; background: var(--cyan); }
-.flashmap-bar .fm-rom { flex: 2112 1 0; background: var(--yellow); }
+.flashmap-bar .fm-app { flex: 1984 1 0; background: var(--cyan); }
+.flashmap-bar .fm-rom { flex: 2048 1 0; background: var(--yellow); }
 .flashmap-legend { display: flex; flex-wrap: wrap; gap: .5rem 1.4rem; margin-top: .7rem; font-size: .88rem; color: var(--muted); padding: 0; list-style: none; }
 .flashmap-legend li { margin: 0; display: inline-flex; gap: .5rem; align-items: center; }
 .flashmap-legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; flex: none; }
