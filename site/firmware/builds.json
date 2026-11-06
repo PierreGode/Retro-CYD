@@ -1,8 +1,8 @@
 {
   "version": "1.0.0",
-  "build": 7,
-  "date": "2026-11-06T15:31:16Z",
-  "commit": "d2b70d6",
+  "build": 8,
+  "date": "2026-11-06T15:55:00Z",
+  "commit": "77b04d8",
   "boards": [
     {
       "id": "cyd40",
