@@ -309,7 +309,13 @@
       // Install button vs placeholder
       var showEsp = ready && canFlash && componentReady && !componentFailed;
       if (espBtn) {
-        if (ready) espBtn.setAttribute("manifest", st.manifestUrl);
+        // Absolute URL + build number: ESP Web Tools fetches the manifest with the
+        // normal HTTP cache, so a stale copy must never be reused.
+        if (ready) {
+          var mUrl = new URL(st.manifestUrl, location.href);
+          mUrl.searchParams.set("v", String((builds && builds.build) || (builds && builds.date) || Date.now()));
+          espBtn.setAttribute("manifest", mUrl.href);
+        }
         else espBtn.removeAttribute("manifest");
         espBtn.hidden = !showEsp;
       }
