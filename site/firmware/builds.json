@@ -1,0 +1,14 @@
+{
+  "version": "932c524",
+  "date": "2026-11-06T15:13:39Z",
+  "commit": "932c524",
+  "boards": [
+    {
+      "id": "cyd40",
+      "name": "4.0\" ESP32-32E display (E32R40T / E32N40T, ST7796S 320x480)",
+      "manifest": "cyd40/manifest.json",
+      "bin": "cyd40/retrocyd-cyd40-merged.bin",
+      "status": "primary"
+    }
+  ]
+}

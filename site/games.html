@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Free &amp; Legal Games — RetroCYD</title>
+  <meta name="description" content="Where to get free and legal NES, Game Boy, Game Boy Color and CHIP-8 games for RetroCYD: homebrew archives, game jams, public-domain collections and backing up your own cartridges.">
+  <meta name="theme-color" content="#06070f">
+  <link rel="canonical" href="https://pierregode.github.io/Retro-CYD/games.html">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,600;0,700;1,400&amp;family=Press+Start+2P&amp;display=swap">
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="assets/site.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html" aria-label="RetroCYD home">
+      <svg viewBox="0 0 32 32" aria-hidden="true" shape-rendering="crispEdges"><rect x="1" y="5" width="30" height="22" rx="3" fill="#ffd23f"/><rect x="4" y="8" width="24" height="16" fill="#0a0e1d"/><rect x="7" y="15" width="7" height="2" fill="#3ef0ff"/><rect x="9.5" y="12.5" width="2" height="7" fill="#3ef0ff"/><rect x="19" y="16" width="3" height="3" fill="#ff5fa8"/><rect x="23" y="13" width="3" height="3" fill="#ff5fa8"/></svg>
+      <span>RETRO<b>CYD</b></span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">MENU</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="guide.html">Guide</a></li>
+        <li><a href="games.html" aria-current="page">Free games</a></li>
+        <li><a href="guide.html#faq">FAQ</a></li>
+        <li><a href="https://github.com/PierreGode/Retro-CYD">GitHub</a></li>
+        <li><a class="nav-cta" href="index.html#flash">Flash now</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="page-hero" aria-labelledby="games-title">
+    <div class="hero-floor" aria-hidden="true"></div>
+    <div class="container">
+      <p class="eyebrow">Insert coin? No need.</p>
+      <h1 id="games-title">Free &amp; <span class="accent">legal</span> games</h1>
+      <p class="lead">People are still making brand-new games for the NES, Game Boy and CHIP-8 — thousands of them, many free. Here's where to find them, how to tell what you're allowed to do with them, and how to get them onto your RetroCYD.</p>
+      <div class="btn-row" style="margin-top:1.4rem">
+        <a class="btn" href="#auto">Download over Wi-Fi</a>
+        <a class="btn btn-ghost" href="#sources">Browse sources</a>
+        <a class="btn btn-ghost" href="#add-games">How to add games</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== LEGAL -->
+  <section class="section-tight" id="legal" aria-labelledby="legal-title">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="legal-title">The short <span class="accent">legal</span> version</h2>
+        <p>Not legal advice — just the plain facts most people get wrong.</p>
+      </div>
+      <div class="grid grid-3 legal-grid">
+        <article class="card ok-card">
+          <span class="verdict">✓ LEGAL</span>
+          <h3>Emulators</h3>
+          <p>An emulator is software that behaves like old hardware. Writing, sharing and using one — like RetroCYD — is legal in most countries.</p>
+        </article>
+        <article class="card no-card">
+          <span class="verdict">✗ NOT OK</span>
+          <h3>Downloading commercial ROMs you don't own</h3>
+          <p>Copying commercial games you haven't bought is copyright infringement in most countries — even if the game is decades old or no longer sold. “Abandonware” isn't a legal category.</p>
+        </article>
+        <article class="card ok-card">
+          <span class="verdict">✓ WHAT RETROCYD IS FOR</span>
+          <h3>Homebrew, public domain, free licences, your own backups</h3>
+          <p>New games released by their authors for free, public-domain programs, openly licensed projects — and backups of cartridges you own, where your local law allows it.</p>
+        </article>
+      </div>
+      <p class="muted" style="margin-top:1.4rem">RetroCYD ships with no games, and this site only links to sources where authors chose to share their work. We will never link to ROM-piracy sites — please don't ask.</p>
+    </div>
+  </section>
+
+  <!-- ===================================================== AUTO DOWNLOAD -->
+  <section class="section" id="auto" aria-labelledby="auto-title">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Easiest way · built into the firmware</p>
+        <h2 id="auto-title">Let RetroCYD <span class="accent">download</span> them</h2>
+        <p>Choose your Wi-Fi in <strong>Settings → Wi-Fi</strong>, then tap <strong>Settings → Game downloads → Download new games now</strong>, or leave <em>Download at startup</em> on. RetroCYD fetches every game below straight from its source, checks it, and puts it in the right folder. <a href="guide.html#wifi">How it works</a></p>
+      </div>
+      <div class="catalog" id="catalog" data-src="catalog/catalog.tsv">
+        <p class="cat-summary" id="cat-summary">Loading the game list…</p>
+        <div class="filters cat-filters" role="group" aria-label="Filter games by system" hidden>
+          <span class="label">Show:</span>
+          <button class="chip" type="button" data-cat="all" aria-pressed="true">ALL</button>
+          <button class="chip" type="button" data-cat="nes" aria-pressed="false">NES</button>
+          <button class="chip" type="button" data-cat="gb" aria-pressed="false">GAME BOY</button>
+          <button class="chip" type="button" data-cat="gbc" aria-pressed="false">GB COLOR</button>
+          <button class="chip" type="button" data-cat="chip8" aria-pressed="false">CHIP-8</button>
+          <input class="cat-search" id="cat-search" type="search" placeholder="Search title or author" aria-label="Search games by title or author">
+        </div>
+        <div class="table-wrap cat-wrap" hidden>
+          <table class="data cat-table">
+            <colgroup><col class="c-game"><col class="c-sys"><col class="c-author"><col class="c-lic"><col class="c-size"></colgroup>
+            <thead><tr><th scope="col">Game</th><th scope="col">System</th><th scope="col">Author</th><th scope="col">Licence</th><th scope="col">Size</th></tr></thead>
+            <tbody id="cat-body"></tbody>
+          </table>
+        </div>
+        <p id="cat-status" class="visually-hidden" aria-live="polite"></p>
+        <p class="muted small">Sources: <a href="https://hh.gbdev.io/">Homebrew Hub</a> (the community NES and Game Boy homebrew databases) and the <a href="https://github.com/JohnEarnest/chip8Archive">CHIP-8 Archive</a> (all CC0). “free download” means the author published the game for free without naming a licence: enjoy it, and ask the author before sharing copies. Authors who want a game removed can ask the source database; the list here is rebuilt from it every week.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== SOURCES -->
+  <section class="section band" id="sources" aria-labelledby="sources-title">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Curated · every link checked</p>
+        <h2 id="sources-title">Where to get <span class="accent">games</span></h2>
+        <p>Each source says what you'll find and what the licence situation is. Always check the individual game's page — the author's terms win.</p>
+      </div>
+
+      <div class="filters" role="group" aria-label="Filter sources by system" hidden>
+        <span class="label">Show:</span>
+        <button class="chip" type="button" data-filter="all" aria-pressed="true">ALL</button>
+        <button class="chip" type="button" data-filter="nes" aria-pressed="false">NES</button>
+        <button class="chip" type="button" data-filter="gb" aria-pressed="false">GAME BOY</button>
+        <button class="chip" type="button" data-filter="gbc" aria-pressed="false">GB COLOR</button>
+        <button class="chip" type="button" data-filter="chip8" aria-pressed="false">CHIP-8</button>
+      </div>
+      <p id="filter-status" class="visually-hidden" aria-live="polite"></p>
+
+      <div class="sources">
+
+        <article class="card source" data-systems="gb gbc nes">
+          <h3>Homebrew Hub <span class="host">hh.gbdev.io</span></h3>
+          <ul class="tags" aria-label="Systems"><li><span class="tag tag-gb">GB</span></li><li><span class="tag tag-gbc">GBC</span></li><li><span class="tag tag-nes">NES</span></li></ul>
+          <p>The biggest searchable archive of Game Boy and Game Boy Color homebrew — well over a thousand games, demos and tools, plus a small but growing NES section.</p>
+          <p class="lic">Community-run by gbdev to collect and preserve homebrew. Entries list their author and, where known, licence and source; many are open source. Check each entry before re-sharing files.</p>
+          <ul class="links">
+            <li><a href="https://hh.gbdev.io/">Browse Homebrew Hub</a></li>
+            <li><a href="https://github.com/gbdev/database">Database on GitHub</a></li>
+          </ul>
+        </article>
+
+        <article class="card source" data-systems="gb gbc">
+          <h3>gbdev &amp; awesome-gbdev <span class="host">gbdev.io</span></h3>
+          <ul class="tags" aria-label="Systems"><li><span class="tag tag-gb">GB</span></li><li><span class="tag tag-gbc">GBC</span></li></ul>
+          <p>The home of the Game Boy development community. The <em>awesome-gbdev</em> list collects notable homebrew games, demos and tools alongside documentation.</p>
+          <p class="lic">A directory rather than a download site — follow each link to the game's own page and licence.</p>
+          <ul class="links">
+            <li><a href="https://gbdev.io/">gbdev.io</a></li>
+            <li><a href="https://github.com/gbdev/awesome-gbdev">awesome-gbdev</a></li>
+            <li><a href="https://gbdev.io/resources.html">Resources</a></li>
+          </ul>
+        </article>
+
+        <article class="card source" data-systems="gb gbc">
+          <h3>GB Compo <span class="host">gbdev game jam</span></h3>
+          <ul class="tags" aria-label="Systems"><li><span class="tag tag-gb">GB</span></li><li><span class="tag tag-gbc">GBC</span></li></ul>
+          <p>gbdev's own competition for new Game Boy software. Each edition produces dozens of polished games — a great “best of” to start with.</p>
+          <p class="lic">Entries are hosted on itch.io and each author sets their own terms there. Many are free downloads and many publish their source.</p>
+          <ul class="links">
+            <li><a href="https://itch.io/jam/gbcompo25">GB Compo 2025</a></li>
+            <li><a href="https://itch.io/jam/gbcompo23">GB Compo 2023</a></li>
+            <li><a href="https://itch.io/jam/gbcompo21">GB Compo 2021</a></li>
+            <li><a href="https://gbdev.io/gbcompo21.html">About the compo</a></li>
+          </ul>
+        </article>
+
+        <article class="card source" data-systems="nes">
+          <h3>NESdev <span class="host">nesdev.org</span></h3>
+          <ul class="tags" aria-label="Systems"><li><span class="tag tag-nes">NES</span></li></ul>
+          <p>The long-running NES development community: wiki, forums and a list of homebrew projects. Its yearly <strong>NESdev Compo</strong> is where many of the best new NES games debut.</p>
+          <p class="lic">Many compo entries can be downloaded from their itch.io pages. Some later get commercial cartridge releases — if you love one, support the developer.</p>
+          <ul class="links">
+            <li><a href="https://www.nesdev.org/">nesdev.org</a></li>
+            <li><a href="https://www.nesdev.org/wiki/Projects">Wiki: Projects</a></li>
+            <li><a href="https://itch.io/jam/nesdev-compo-2023">NESdev Compo 2023</a></li>
+            <li><a href="https://itch.io/jam/nesdev-2022">NESdev Compo 2022</a></li>
+            <li><a href="https://itch.io/games/tag-homebrew/tag-nesdevcompo">All compo games</a></li>
+          </ul>
+        </article>
+
+        <article class="card source" data-systems="nes gb gbc chip8">
+          <h3>itch.io <span class="host">itch.io</span></h3>
+          <ul class="tags" aria-label="Systems"><li><span class="tag tag-nes">NES</span></li><li><span class="tag tag-gb">GB</span></li><li><span class="tag tag-gbc">GBC</span></li><li><span class="tag tag-chip8">CHIP-8</span></li></ul>
+          <p>Where many homebrew developers publish today. Lots of free and pay-what-you-want ROMs, plus game-jam entries.</p>
+          <p class="lic warn">Free, pay-what-you-want and paid games sit side by side — respect each game's licence, and buying a game you enjoy directly supports its developer. Tip: some “Game Boy-style” games are PC games, not ROMs; look for a <code>.gb</code>, <code>.gbc</code>, <code>.nes</code> or <code>.ch8</code> download.</p>
+          <ul class="links">
+            <li><a href="https://itch.io/games/tag-nes">NES</a></li>
+            <li><a href="https://itch.io/games/free/tag-nes">Free NES</a></li>
+            <li><a href="https://itch.io/games/tag-gameboy">Game Boy</a></li>
+            <li><a href="https://itch.io/games/free/tag-gameboy">Free Game Boy</a></li>
+            <li><a href="https://itch.io/games/tag-gameboy-color">Game Boy Color</a></li>
+            <li><a href="https://itch.io/games/tag-chip-8">CHIP-8</a></li>
+            <li><a href="https://itch.io/games/tag-homebrew">Homebrew</a></li>
+          </ul>
+        </article>
+
+        <article class="card source" data-systems="nes">
+          <h3>Pin Eight <span class="host">pineight.com</span></h3>
+          <ul class="tags" aria-label="Systems"><li><span class="tag tag-nes">NES</span></li></ul>
+          <p>Damian Yerrick's site, home of well-known NES homebrew such as <em>Thwaite</em>, <em>Concentration Room</em> and <em>RHDE</em>, with source code.</p>
+          <p class="lic">Free downloads from the author. Check each project page for its specific licence.</p>
+          <ul class="links">
+            <li><a href="https://pineight.com/">pineight.com</a></li>
+          </ul>
+        </article>
+
+        <article class="card source" data-systems="chip8">
+          <h3>CHIP-8 Archive <span class="host">John Earnest</span></h3>
+          <ul class="tags" aria-label="Systems"><li><span class="tag tag-chip8">CHIP-8</span></li></ul>
+          <p>A curated collection of modern CHIP-8 and SUPER-CHIP games, all playable online first. Each program lists its platform and the game jam it was made for, if any.</p>
+          <p class="lic">Everything is released under <strong>CC0</strong> (“no rights reserved”) — copy freely. Pick programs marked <code>chip8</code> or <code>schip</code>; <code>xochip</code> ones won't run on RetroCYD.</p>
+          <ul class="links">
+            <li><a href="https://johnearnest.github.io/chip8Archive/">Play &amp; download</a></li>
+            <li><a href="https://github.com/JohnEarnest/chip8Archive">GitHub repo</a></li>
+          </ul>
+        </article>
+
+        <article class="card source" data-systems="chip8">
+          <h3>Octojam <span class="host">CHIP-8 game jam</span></h3>
+          <ul class="tags" aria-label="Systems"><li><span class="tag tag-chip8">CHIP-8</span></li></ul>
+          <p>The annual October jam for CHIP-8 games, made with the Octo toolchain. Dozens of tiny, inventive games per year.</p>
+          <p class="lic warn">Many recent entries target XO-CHIP, which RetroCYD doesn't run — check each entry's platform. Licences are set per entry on itch.io.</p>
+          <ul class="links">
+            <li><a href="https://itch.io/jam/octojam-10">Octojam 10</a></li>
+            <li><a href="https://itch.io/jam/octojam-9">Octojam 9</a></li>
+          </ul>
+        </article>
+
+        <article class="card source" data-systems="chip8">
+          <h3>Awesome CHIP-8 <span class="host">chip-8.github.io</span></h3>
+          <ul class="tags" aria-label="Systems"><li><span class="tag tag-chip8">CHIP-8</span></li></ul>
+          <p>A community-curated list of CHIP-8 documentation, tools, emulators and game collections — the place to go deeper.</p>
+          <p class="lic">A directory of links. Of its game collections, the CC0 CHIP-8 Archive is the one with a clearly stated licence.</p>
+          <ul class="links">
+            <li><a href="https://chip-8.github.io/links/">Awesome CHIP-8</a></li>
+          </ul>
+        </article>
+
+        <article class="card source" data-systems="nes gb gbc">
+          <h3>PDRoms <span class="host">pdroms.de</span></h3>
+          <ul class="tags" aria-label="Systems"><li><span class="tag tag-nes">NES</span></li><li><span class="tag tag-gb">GB</span></li><li><span class="tag tag-gbc">GBC</span></li></ul>
+          <p>A homebrew news and download site running since the late 1990s, with thousands of files across dozens of platforms — including NES and Game Boy (Color).</p>
+          <p class="lic">Hosts homebrew released for free by its authors. Read each release's notes for its terms.</p>
+          <ul class="links">
+            <li><a href="https://pdroms.de/">pdroms.de</a></li>
+          </ul>
+        </article>
+
+        <article class="card source" data-systems="nes gbc gb">
+          <h3>RetroBrews <span class="host">retrobrews.github.io</span></h3>
+          <ul class="tags" aria-label="Systems"><li><span class="tag tag-nes">NES</span></li><li><span class="tag tag-gbc">GBC</span></li></ul>
+          <p>Freeware homebrew organised by system, one GitHub repository per console — full games rather than demos. Built with RetroPie in mind, but the files are ordinary ROMs.</p>
+          <p class="lic">Games are shared with their authors' approval as freeware: downloading is allowed, selling isn't.</p>
+          <ul class="links">
+            <li><a href="https://retrobrews.github.io/">retrobrews.github.io</a></li>
+          </ul>
+        </article>
+
+        <article class="card source" data-systems="nes gb chip8">
+          <h3>Zophar's Domain — PD ROMs <span class="host">zophar.net</span></h3>
+          <ul class="tags" aria-label="Systems"><li><span class="tag tag-nes">NES</span></li><li><span class="tag tag-gb">GB</span></li><li><span class="tag tag-chip8">CHIP-8</span></li></ul>
+          <p>A veteran emulation site's public-domain section: classic demos and small homebrew games, plus the old CHIP-8 and SUPER-CHIP game packs.</p>
+          <p class="lic warn">Older archive with mixed provenance — a few oddities slipped in (the NES list even contains a copyrighted Game Genie menu ROM). Read each entry's notes and skip anything that isn't clearly free.</p>
+          <ul class="links">
+            <li><a href="https://www.zophar.net/pdroms.html">All PD ROMs</a></li>
+            <li><a href="https://www.zophar.net/pdroms/nes.html">NES</a></li>
+            <li><a href="https://www.zophar.net/pdroms/gameboy.html">Game Boy</a></li>
+            <li><a href="https://www.zophar.net/pdroms/chip8.html">CHIP-8</a></li>
+          </ul>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== ADD GAMES -->
+  <section class="section" id="add-games" aria-labelledby="add-title">
+    <div class="container">
+      <div class="grid grid-2" style="gap:clamp(1.5rem,4vw,3rem); align-items:start">
+        <div>
+          <p class="eyebrow">Checklist</p>
+          <h2 id="add-title">How to add <span class="accent">games</span></h2>
+          <ul class="checklist">
+            <li><span>The game is free to download (homebrew, public domain, open licence) — or a backup of a cartridge you own.</span></li>
+            <li><span><strong>Unzipping is optional.</strong> A <code>.zip</code> containing a single ROM works as-is.</span></li>
+            <li><span>Drop it into the right folder: <code>/roms/nes</code>, <code>/roms/gb</code>, <code>/roms/gbc</code> or <code>/roms/chip8</code>.</span></li>
+            <li><span><strong>File names are shown as titles</strong> — rename <code>astro_drift_v1.2_final.gb</code> to <code>Astro Drift.gb</code>.</span></li>
+            <li><span>Huge library? Use <strong>subfolders</strong>. The first visit to a big folder builds an index (a few seconds for ~10,000 files), then it's instant.</span></li>
+            <li><span>Keep each ROM <strong>≤ 2 MB</strong> (the size of the flash ROM cache).</span></li>
+            <li><span>CHIP-8: only CHIP-8 and SUPER-CHIP programs — not XO-CHIP.</span></li>
+            <li><span>Eject the card safely. Missing something? <strong>Settings → Rescan library</strong>.</span></li>
+          </ul>
+        </div>
+        <div>
+          <p class="eyebrow">Where it goes</p>
+          <h2>SD card <span class="accent">map</span></h2>
+          <pre class="tree"><code><span class="n">microSD (FAT32)</span>
+└── <span class="d">roms/</span>
+    ├── <span class="d">nes/</span>    <span class="x">.nes .zip</span>
+    │   └── <span class="d">puzzle/</span>   <span class="n">subfolders OK</span>
+    ├── <span class="d">gb/</span>     <span class="x">.gb .gbc .zip</span>
+    ├── <span class="d">gbc/</span>    <span class="x">.gbc .gb .zip</span>
+    └── <span class="d">chip8/</span>  <span class="x">.ch8 .c8 .sc8 .zip</span></code></pre>
+          <p class="muted">The folders are created automatically the first time RetroCYD boots with the card inserted. Full details in the <a href="guide.html#sd-card">guide</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== LICENCES -->
+  <section class="section-tight" id="licences" aria-labelledby="lic-title">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="lic-title">Reading <span class="accent">licences</span> in 30 seconds</h2>
+        <p>“Free to download” doesn't always mean “free to re-upload”. Here's what the common labels let you do.</p>
+      </div>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th scope="col">Label</th><th scope="col">Play it?</th><th scope="col">Share the file?</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Public domain / CC0</th><td>Yes</td><td>Yes — no conditions at all.</td></tr>
+            <tr><th scope="row">Open source (MIT, zlib, GPL, CC-BY…)</th><td>Yes</td><td>Yes, under the licence's conditions — usually keep the credits and licence text.</td></tr>
+            <tr><th scope="row">Freeware</th><td>Yes</td><td>Often restricted — link to the author's page instead of re-uploading.</td></tr>
+            <tr><th scope="row">Pay what you want</th><td>Yes</td><td>Same as freeware. $0 is allowed; paying something is how authors keep making games.</td></tr>
+            <tr><th scope="row">Commercial homebrew</th><td>After buying it</td><td>No. If it's for sale, buy it — that's how the scene survives.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== DUMP -->
+  <section class="section band" id="dump" aria-labelledby="dump-title">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Own the cartridge?</p>
+        <h2 id="dump-title">Back up your <span class="accent">own</span> cartridges</h2>
+        <p>Cartridge dumpers plug into your computer over USB and copy a cartridge's ROM (and often its save) to a file.</p>
+      </div>
+      <div class="grid grid-2">
+        <article class="card y">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2h9l3 3v17H6z"/><path d="M9 6h6v6H9z"/><path d="M9 16h6"/></svg></div>
+          <h3>GBxCart RW</h3>
+          <p>A reader/writer for Game Boy, Game Boy Color and Game Boy Advance cartridges, sold through insideGadgets and used with the FlashGBX software. Backs up ROMs and save data.</p>
+          <p><a href="https://www.gbxcart.com/">gbxcart.com</a></p>
+        </article>
+        <article class="card m">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="1"/><path d="M7 6V3h10v3"/><path d="M7 11h10M7 15h6"/></svg></div>
+          <h3>INL Retro Programmer-Dumper</h3>
+          <p>An open-source cartridge dumper/programmer from InfiniteNESLives that reads NES / Famicom cartridges (among others). Similar dumpers exist from other makers.</p>
+          <p><a href="https://gitlab.com/InfiniteNesLives/INL-retro-progdump">INL-retro-progdump on GitLab</a></p>
+        </article>
+      </div>
+      <div class="notice notice-warn" style="margin-top:1.4rem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 21h20z"/><path d="M12 10v5M12 18h.01"/></svg>
+        <div><strong>Personal backups: check your local law</strong><p>Whether you may copy a cartridge you own varies by country — some allow private backups, some don't, and some only under conditions. Check what applies where you live. Either way: keep your dumps to yourself and never share them.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== MAKE -->
+  <section class="section" id="make" aria-labelledby="make-title">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Player 2: you</p>
+        <h2 id="make-title">Or make your <span class="accent">own</span></h2>
+        <p>The most legal game of all is the one you wrote. These tools produce ROMs that run on RetroCYD.</p>
+      </div>
+      <div class="grid grid-4">
+        <a class="card bracket" href="https://www.gbstudio.dev/" style="text-decoration:none;color:inherit">
+          <ul class="tags" aria-label="Systems"><li><span class="tag tag-gb">GB</span></li><li><span class="tag tag-gbc">GBC</span></li></ul>
+          <h3>GB Studio</h3>
+          <p>Free, visual game maker for the Game Boy — no coding needed. Exports real ROMs.</p>
+        </a>
+        <a class="card bracket" href="https://johnearnest.github.io/Octo/" style="text-decoration:none;color:inherit">
+          <ul class="tags" aria-label="Systems"><li><span class="tag tag-chip8">CHIP-8</span></li></ul>
+          <h3>Octo</h3>
+          <p>A CHIP-8 / SUPER-CHIP IDE that runs in your browser. Write, test and export in minutes.</p>
+        </a>
+        <a class="card bracket" href="https://www.nesdev.org/wiki/Nesdev_Wiki" style="text-decoration:none;color:inherit">
+          <ul class="tags" aria-label="Systems"><li><span class="tag tag-nes">NES</span></li></ul>
+          <h3>NESdev Wiki</h3>
+          <p>The reference for NES programming: hardware docs, tutorials and tools.</p>
+        </a>
+        <a class="card bracket" href="https://gbdev.io/resources.html" style="text-decoration:none;color:inherit">
+          <ul class="tags" aria-label="Systems"><li><span class="tag tag-gb">GB</span></li><li><span class="tag tag-gbc">GBC</span></li></ul>
+          <h3>gbdev resources</h3>
+          <p>Documentation, toolchains and tutorials for Game Boy and Game Boy Color development.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="index.html" aria-label="RetroCYD home">
+          <svg viewBox="0 0 32 32" aria-hidden="true" shape-rendering="crispEdges"><rect x="1" y="5" width="30" height="22" rx="3" fill="#ffd23f"/><rect x="4" y="8" width="24" height="16" fill="#0a0e1d"/><rect x="7" y="15" width="7" height="2" fill="#3ef0ff"/><rect x="9.5" y="12.5" width="2" height="7" fill="#3ef0ff"/><rect x="19" y="16" width="3" height="3" fill="#ff5fa8"/><rect x="23" y="13" width="3" height="3" fill="#ff5fa8"/></svg>
+          <span>RETRO<b>CYD</b></span>
+        </a>
+        <p style="margin-top:1rem">Free retro game firmware for the 4.0″ ESP32 “Cheap Yellow Display”.</p>
+      </div>
+      <div>
+        <h2>Site</h2>
+        <ul>
+          <li><a href="index.html#flash">Web flasher</a></li>
+          <li><a href="guide.html">Guide</a></li>
+          <li><a href="games.html">Free &amp; legal games</a></li>
+          <li><a href="guide.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Project</h2>
+        <ul>
+          <li><a href="https://github.com/PierreGode/Retro-CYD">GitHub</a></li>
+          <li><a href="https://github.com/PierreGode/Retro-CYD/issues">Report an issue</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="disclaimer">
+      <p>RetroCYD is an independent hobby project. It is not affiliated with, endorsed or sponsored by Nintendo, Sega, Sony or any other console maker, nor by LCDwiki, Sunton or Espressif. All trademarks belong to their respective owners; system names are used only to describe compatibility.</p>
+      <p>Linked sites are run by third parties. We check that each link works and points to homebrew or freely shared software, but we don't control their content — the terms set by each game's author apply.</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

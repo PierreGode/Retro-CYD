@@ -1,0 +1,701 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RetroCYD Guide — hardware, SD card, controls, troubleshooting</title>
+  <meta name="description" content="Everything about RetroCYD: what to buy, flashing safely, SD card layout, touch and wired controls, settings, pinout, troubleshooting, FAQ and building from source.">
+  <meta name="theme-color" content="#06070f">
+  <link rel="canonical" href="https://pierregode.github.io/Retro-CYD/guide.html">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,600;0,700;1,400&amp;family=Press+Start+2P&amp;display=swap">
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="assets/site.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html" aria-label="RetroCYD home">
+      <svg viewBox="0 0 32 32" aria-hidden="true" shape-rendering="crispEdges"><rect x="1" y="5" width="30" height="22" rx="3" fill="#ffd23f"/><rect x="4" y="8" width="24" height="16" fill="#0a0e1d"/><rect x="7" y="15" width="7" height="2" fill="#3ef0ff"/><rect x="9.5" y="12.5" width="2" height="7" fill="#3ef0ff"/><rect x="19" y="16" width="3" height="3" fill="#ff5fa8"/><rect x="23" y="13" width="3" height="3" fill="#ff5fa8"/></svg>
+      <span>RETRO<b>CYD</b></span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">MENU</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="guide.html" aria-current="page">Guide</a></li>
+        <li><a href="games.html">Free games</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="https://github.com/PierreGode/Retro-CYD">GitHub</a></li>
+        <li><a class="nav-cta" href="index.html#flash">Flash now</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="page-hero" aria-labelledby="guide-title">
+    <div class="hero-floor" aria-hidden="true"></div>
+    <div class="container">
+      <p class="eyebrow">Field guide</p>
+      <h1 id="guide-title">The RetroCYD <span class="accent">manual</span></h1>
+      <p class="lead">What to buy, how to flash it safely, how to lay out the SD card, how to play with touch or a real controller — and what to do when something doesn't work.</p>
+    </div>
+  </section>
+
+  <div class="container doc-layout">
+    <aside class="toc" aria-label="On this page">
+      <details open>
+        <summary>ON THIS PAGE</summary>
+        <ol>
+          <li><a href="#hardware">1. Hardware</a></li>
+          <li><a href="#flashing">2. Flashing</a></li>
+          <li><a href="#safety">3. Safety &amp; recovery</a></li>
+          <li><a href="#sd-card">4. SD card</a></li>
+          <li><a href="#launcher">5. Launcher &amp; library</a></li>
+          <li><a href="#controls">6. Controls</a></li>
+          <li><a href="#menu">7. In-game menu</a></li>
+          <li><a href="#saves">8. Saves &amp; states</a></li>
+          <li><a href="#settings">9. Settings</a></li>
+          <li><a href="#wifi">10. Wi-Fi &amp; free games</a></li>
+          <li><a href="#audio">11. Audio</a></li>
+          <li><a href="#pinout">12. Pinout &amp; flash layout</a></li>
+          <li><a href="#troubleshooting">13. Troubleshooting</a></li>
+          <li><a href="#faq">14. FAQ</a></li>
+        </ol>
+      </details>
+    </aside>
+
+    <article class="doc">
+
+      <!-- ===================================================== 1 HARDWARE -->
+      <section id="hardware" aria-labelledby="h-hardware">
+        <h2 id="h-hardware"><span class="num">01</span> Hardware</h2>
+        <p>RetroCYD targets the <strong>4.0″ ESP32-32E display board</strong> documented on <a href="https://www.lcdwiki.com/4.0inch_ESP32-32E_Display">LCDwiki</a>, sold as <strong>E32R40T</strong> (with resistive touch) and <strong>E32N40T</strong> (no touch). It's an ESP32 with a 320×480 ST7796S screen, microSD slot, audio amplifier and USB-C on one board — a bigger sibling of the original “Cheap Yellow Display”.</p>
+
+        <h3>Shopping list</h3>
+        <div class="table-wrap">
+          <table class="data">
+            <thead><tr><th scope="col">Item</th><th scope="col">Needed?</th><th scope="col">Notes</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">4.0″ ESP32-32E board</th><td><span class="badge badge-primary">Yes</span></td><td><strong>E32R40T</strong> (touch) recommended. The <strong>E32N40T</strong> has no touch panel, so it needs a controller.</td></tr>
+              <tr><th scope="row">microSD card</th><td><span class="badge badge-primary">Yes</span></td><td>SDHC, up to 32 GB, formatted FAT32. Even 4 GB holds thousands of 8-bit games.</td></tr>
+              <tr><th scope="row">USB-C data cable</th><td><span class="badge badge-primary">Yes</span></td><td>For flashing and power. Must carry data — charge-only cables won't work.</td></tr>
+              <tr><th scope="row">Small speaker</th><td><span class="badge badge-info">Recommended</span></td><td>8 Ω 1.5 W or 4 Ω 2 W with a 1.25 mm 2-pin plug (often listed as “JST 1.25” or “MX1.25”).</td></tr>
+              <tr><th scope="row">Wii extension breakout adapter</th><td><span class="badge badge-muted">Optional</span></td><td>Small PCB the controller plugs into; exposes <code>+ − d c</code> pads. Needed for a wired controller.</td></tr>
+              <tr><th scope="row">Classic-style controller</th><td><span class="badge badge-muted">Optional</span></td><td>Wii Classic Controller, Classic Controller Pro, or the NES / SNES Classic Mini controller.</td></tr>
+              <tr><th scope="row">4-pin 1.25 mm cable</th><td><span class="badge badge-muted">Optional</span></td><td>To connect the board's I2C header to the breakout. Some boards ship with one.</td></tr>
+              <tr><th scope="row">3.7 V LiPo battery</th><td><span class="badge badge-muted">Optional</span></td><td>Single-cell LiPo with a 1.25 mm 2-pin plug. <strong>Check polarity before plugging in</strong> — these plugs are not wired the same way by every seller.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Supported boards</h3>
+        <div class="table-wrap">
+          <table class="data">
+            <thead><tr><th scope="col">Board</th><th scope="col">Display</th><th scope="col">Touch</th><th scope="col">Status</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">E32R40T (4.0″ ESP32-32E)</th><td>ST7796S · 320×480</td><td>Resistive, XPT2046, single touch</td><td><span class="badge badge-primary">Primary</span></td></tr>
+              <tr><th scope="row">E32N40T (4.0″ ESP32-32E)</th><td>ST7796S · 320×480</td><td>None — controller required</td><td><span class="badge badge-primary">Primary</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="muted">Other CYD variants (for example the original 2.8″ ESP32-2432S028) use different displays and pins and have no RetroCYD build. Flashing a build for the wrong board is harmless — you'll just get a white or garbled screen until you flash the right one.</p>
+        <p class="muted">Inside: ESP32-D0WD-V3 (dual-core Xtensa LX6, up to 240 MHz), 520 KB SRAM, <strong>4 MB flash, no PSRAM</strong>, on-board USB-serial chip (CH340-type), BOOT and RESET buttons. Full pin map in <a href="#pinout">section 11</a>.</p>
+      </section>
+
+      <!-- ===================================================== 2 FLASHING -->
+      <section id="flashing" aria-labelledby="h-flashing">
+        <h2 id="h-flashing"><span class="num">02</span> Flashing</h2>
+        <p>The easiest way is the <a href="index.html#flash">web installer</a>. It runs entirely in your browser using ESP Web Tools and the Web Serial API.</p>
+        <ol>
+          <li>Plug the board into your computer with a USB-C <strong>data</strong> cable.</li>
+          <li>Open this site in desktop <strong>Chrome</strong>, <strong>Edge</strong> or <strong>Opera</strong> (Windows, macOS, Linux, ChromeOS). Firefox, Safari and mobile browsers don't support Web Serial.</li>
+          <li>On the <a href="index.html#flash">flasher</a>, pick your board.</li>
+          <li>Click <strong>Connect &amp; install</strong> and choose the serial port — usually named <em>USB-SERIAL CH340</em>, <em>USB Serial</em> or <em>wchusbserial</em>.</li>
+          <li>Click <strong>Install</strong>. On a first install, tick <strong>Erase device</strong> (safe — see <a href="#safety">Safety</a>).</li>
+          <li>Wait for the progress bar to finish. The board reboots into RetroCYD.</li>
+        </ol>
+        <div class="notice notice-info">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-5M12 8h.01"/></svg>
+          <div><strong>Board won't enter flashing mode?</strong><p>Hold <kbd>BOOT</kbd> while you click Connect (or press and release <kbd>RST</kbd> while holding <kbd>BOOT</kbd>), then let go once the flasher starts talking to it.</p></div>
+        </div>
+
+        <h3 id="drivers">USB-serial drivers</h3>
+        <p>The board's USB port goes through a CH340-type USB-to-serial chip. If no port shows up in the list:</p>
+        <ul>
+          <li><strong>Windows:</strong> Windows Update often installs the driver automatically. If not, install WCH's <a href="https://www.wch-ic.com/downloads/CH341SER_EXE.html">CH341SER driver</a>, then check Device Manager → <em>Ports (COM &amp; LPT)</em> for <em>USB-SERIAL CH340 (COMx)</em>.</li>
+          <li><strong>macOS:</strong> recent versions usually recognise it out of the box. If not, install WCH's <a href="https://www.wch-ic.com/downloads/CH34XSER_MAC_ZIP.html">CH34x macOS driver</a> and allow it in System Settings → Privacy &amp; Security.</li>
+          <li><strong>Linux:</strong> the driver is built into the kernel. If the port appears but can't be opened, add yourself to the serial group (<code>sudo usermod -aG dialout $USER</code>, or <code>uucp</code> on Arch) and log in again. Some distros' <code>brltty</code> package grabs CH340 devices — removing it helps.</li>
+        </ul>
+        <p class="muted">Only one program can use a serial port at a time: close Arduino IDE / PlatformIO serial monitors and other flashing tools first.</p>
+      </section>
+
+      <!-- ===================================================== 3 SAFETY -->
+      <section id="safety" aria-labelledby="h-safety">
+        <h2 id="h-safety"><span class="num">03</span> Safety &amp; recovery</h2>
+        <div class="notice notice-ok">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg>
+          <div><strong>The rule: never burn fuses.</strong><p>The web flasher and the CI build only ever write the SPI flash chip. No eFuses are burned. Secure boot and flash encryption are disabled in the build. Nothing is ever run through <code>espefuse</code>.</p></div>
+        </div>
+
+        <h3>Flash vs. eFuses — what's the difference?</h3>
+        <p>The ESP32 has two very different kinds of storage:</p>
+        <div class="table-wrap">
+          <table class="data">
+            <thead><tr><th scope="col"></th><th scope="col">SPI flash (what we write)</th><th scope="col">eFuses (never touched)</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">What it is</th><td>A separate 4 MB chip holding the bootloader, firmware, settings and ROM cache.</td><td>One-time-programmable bits inside the ESP32 itself (MAC address, security settings, flash voltage…).</td></tr>
+              <tr><th scope="row">Can it be undone?</th><td><strong>Yes.</strong> Rewrite or erase it as often as you like.</td><td><strong>No.</strong> A burned eFuse bit stays burned forever.</td></tr>
+              <tr><th scope="row">What can go wrong</th><td>Worst case: wrong firmware, white screen. Flash again and it's fixed.</td><td>Wrong burn can lock out flashing or permanently brick the chip.</td></tr>
+              <tr><th scope="row">Touched by RetroCYD?</th><td>Yes — that's how firmware is installed.</td><td>Never. Not by the web flasher, the CI build or the firmware.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>What does “Erase device” do?</h3>
+        <p>When the web installer asks whether to erase, it means <strong>erase the flash chip</strong> before writing. That clears old firmware, RetroCYD's settings (volume, brightness, calibration…) and the ROM cache. <strong>Your SD card — games and saves — is not touched.</strong> It's fully reversible: the next install puts everything back, and settings return to defaults. Erasing is recommended on a first install or when switching from other firmware.</p>
+
+        <h3>Why the board can always be recovered</h3>
+        <p>The ESP32's first-stage bootloader lives in mask ROM inside the chip and can't be overwritten by flashing. Holding <kbd>BOOT</kbd> (IO0) at reset always enters its download mode — as long as no eFuses have been burned to disable it, which RetroCYD never does. So whatever happens to the flash contents, you can flash again.</p>
+
+        <h3 id="recovery">Recovery steps</h3>
+        <ol>
+          <li>Hold <kbd>BOOT</kbd>.</li>
+          <li>Tap <kbd>RST</kbd> (EN) once while still holding <kbd>BOOT</kbd>.</li>
+          <li>Release <kbd>BOOT</kbd>. The board is now in download mode and waits for the flasher (RetroCYD won't start — that's expected).</li>
+          <li>Flash again with the <a href="index.html#flash">web installer</a> (tick <em>Erase device</em>) or with esptool below.</li>
+        </ol>
+
+        <h3 id="manual-flash">Manual flashing with esptool</h3>
+        <p>Prefer the command line? Download the merged <code>.bin</code> from the <a href="index.html#flash">flasher panel</a>, install <a href="https://docs.espressif.com/projects/esptool/en/latest/esp32/">esptool</a> (<code>pip install esptool</code>) and run <strong>only</strong> this:</p>
+        <pre data-copy="esptool.py --chip esp32 write_flash 0x0 retrocyd-cyd40-merged.bin"><code><span class="p">$ </span>esptool.py --chip esp32 write_flash 0x0 retrocyd-cyd40-merged.bin</code></pre>
+        <ul>
+          <li>Add <code>--port COM5</code> (Windows) or <code>--port /dev/ttyUSB0</code> (Linux) after <code>--chip esp32</code> if esptool picks the wrong port.</li>
+          <li>For a clean slate first, <code>esptool.py --chip esp32 erase_flash</code> is the same as the web installer's “Erase device” — flash only, still safe.</li>
+          <li>Newer esptool releases also accept the spelling <code>esptool --chip esp32 write-flash 0x0 …</code>; it's the same command.</li>
+          <li>The image is a single merged file that goes at offset <code>0x0</code>. Don't split it or use other offsets.</li>
+        </ul>
+        <div class="notice notice-danger">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></svg>
+          <div>
+            <strong>Never run these on your board</strong>
+            <p>Nothing in RetroCYD needs them, and they make permanent changes:</p>
+            <ul>
+              <li><code>espefuse.py burn_efuse</code>, <code>burn_key</code>, <code>burn_key_digest</code>, <code>burn_bit</code>, <code>burn_block_data</code>, <code>burn_custom_mac</code> — or any other <code>burn_*</code> command</li>
+              <li><code>espefuse.py set_flash_voltage</code>, <code>write_protect_efuse</code>, <code>read_protect_efuse</code></li>
+              <li>Enabling <em>Secure Boot</em> or <em>Flash Encryption</em> if you build firmware yourself</li>
+            </ul>
+            <p>If a guide, script or tool asks you to do any of the above for RetroCYD, it's wrong.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================== 4 SD CARD -->
+      <section id="sd-card" aria-labelledby="h-sd">
+        <h2 id="h-sd"><span class="num">04</span> SD card</h2>
+        <h3>Format: FAT32</h3>
+        <p>Use a microSD (SDHC) card formatted <strong>FAT32</strong>. Cards up to 32 GB usually come that way and work out of the box. Bigger cards (SDXC) ship as exFAT and must be reformatted to FAT32:</p>
+        <ul>
+          <li><strong>macOS:</strong> Disk Utility → select the card → Erase → Format <em>MS-DOS (FAT)</em>, Scheme <em>Master Boot Record</em>.</li>
+          <li><strong>Linux:</strong> <code>sudo mkfs.vfat -F 32 /dev/sdX1</code> — double-check the device name first.</li>
+          <li><strong>Windows:</strong> the built-in formatter only offers FAT32 up to 32 GB. For larger cards use a third-party FAT32 formatter, or simply buy a 32 GB card — games for these systems are tiny.</li>
+        </ul>
+
+        <h3>Folder layout</h3>
+        <p>Insert the card and boot RetroCYD once — it creates this structure for you:</p>
+        <pre class="tree"><code><span class="n">microSD (FAT32)</span>
+├── <span class="d">roms/</span>
+│   ├── <span class="d">nes/</span>      <span class="x">.nes .zip</span>
+│   ├── <span class="d">gb/</span>       <span class="x">.gb .gbc .zip</span>
+│   ├── <span class="d">gbc/</span>      <span class="x">.gbc .gb .zip</span>
+│   └── <span class="d">chip8/</span>    <span class="x">.ch8 .c8 .sc8 .zip</span>
+├── <span class="d">saves/</span>
+│   └── <span class="d">&lt;system&gt;/</span> <span class="n">battery saves (.sav) + save states (.st0 – .st3)</span>
+└── <span class="d">retrocyd/</span>   <span class="n">library index cache — safe to delete, it's rebuilt</span></code></pre>
+        <ul>
+          <li><strong>Game Boy vs. Game Boy Color:</strong> both folders accept <code>.gb</code> and <code>.gbc</code>. Sort them however you like — e.g. monochrome games in <code>gb/</code>, colour games in <code>gbc/</code>.</li>
+          <li><strong>Subfolders</strong> are fine (<code>/roms/nes/puzzle/…</code>) — handy for big collections.</li>
+          <li><strong>Backups:</strong> copy <code>/saves/</code> to your computer now and then. That's all your progress.</li>
+        </ul>
+
+        <h3 id="adding-games">Adding games</h3>
+        <ol>
+          <li>Get games from a legitimate source — see <a href="games.html">Free &amp; legal games</a>.</li>
+          <li>Unzipping is optional: a <code>.zip</code> containing a single ROM works.</li>
+          <li>Copy each ROM into the matching <code>/roms/&lt;system&gt;/</code> folder.</li>
+          <li>The <strong>file name is the title</strong> shown in the launcher — rename files to something readable.</li>
+          <li>Keep every ROM at <strong>2 MB or less</strong> (uncompressed).</li>
+          <li>Eject the card safely, insert it, and if new games don't appear use <strong>Settings → Rescan library</strong>.</li>
+        </ol>
+      </section>
+
+      <!-- ===================================================== 5 LAUNCHER -->
+      <section id="launcher" aria-labelledby="h-launcher">
+        <h2 id="h-launcher"><span class="num">05</span> Launcher &amp; library</h2>
+        <p>The home screen shows a <strong>tile per system</strong> and a <strong>recently played</strong> list so you can jump straight back into a game. Inside a system, games are listed alphabetically; drag to scroll, or use the <strong>A–Z bar</strong> on the edge to jump to a letter.</p>
+
+        <h3>Built for thousands of games</h3>
+        <p>Reading a huge directory from FAT32 on every visit would be slow, so the first time you open a big folder RetroCYD builds a <strong>sorted index</strong> and stores it in <code>/retrocyd/</code> on the card. That takes a few seconds for around 10,000 files. After that, the folder opens instantly. Delete <code>/retrocyd/</code> or use <em>Rescan library</em> at any time to rebuild it.</p>
+
+        <h3>The ROM cache</h3>
+        <p>The ESP32 has only 520 KB of RAM — less than many ROMs — and no PSRAM. So when you launch a game, RetroCYD copies it from the SD card into a dedicated <strong>2 MB “ROM cache” partition</strong> in flash and runs it from there.</p>
+        <ul>
+          <li>Launching a <em>different</em> game takes a couple of seconds, with a progress bar.</li>
+          <li>Relaunching the <em>same</em> game is instant — it's already in the cache.</li>
+          <li>The cache size is also the <strong>maximum ROM size: 2 MB</strong> (plus 64 KB). Every Game Boy ROM up to 2 MB fits; the few 4 MB and 8 MB titles don't.</li>
+          <li><strong>ZIP files</strong> with a single ROM inside (deflate or stored) are unpacked straight into the cache.</li>
+        </ul>
+      </section>
+
+      <!-- ===================================================== 6 CONTROLS -->
+      <section id="controls" aria-labelledby="h-controls">
+        <h2 id="h-controls"><span class="num">06</span> Controls</h2>
+
+        <h3 id="touch">On-screen touch gamepad (E32R40T)</h3>
+        <p>In game, the screen shows a D-pad on the left, A and B on the right, SELECT and START at the bottom and a MENU button. The E32R40T's touch panel is <strong>resistive and single-point</strong>: it can only sense one touch at a time. To make that playable, RetroCYD adds:</p>
+        <ul>
+          <li><strong>Diagonal D-pad zones</strong> — press between two arrows for up-left, down-right and so on.</li>
+          <li>A combined <strong>A+B zone</strong> for games that need both buttons at once.</li>
+        </ul>
+        <figure class="figure">
+          <svg class="diagram" viewBox="0 0 520 360" role="img" aria-labelledby="pad-t pad-d">
+            <title id="pad-t">Touch gamepad zones</title>
+            <desc id="pad-d">A landscape screen. The game picture is in the middle. On the left is a three by three D-pad grid with four arrow zones and four diagonal zones. On the right are A and B buttons with a small A plus B zone between them. SELECT and START are at the bottom centre and MENU is at the top right.</desc>
+            <rect x="4" y="4" width="512" height="352" rx="14" fill="#05060c" stroke="#26305a" stroke-width="2"/>
+            <svg x="20" y="20" width="480" height="320" viewBox="0 0 480 320">
+              <rect width="480" height="320" fill="#0b1024"/>
+              <rect x="120" y="20" width="240" height="216" rx="4" fill="#13233a" stroke="#5dff9e" stroke-width="2" stroke-dasharray="6 5"/>
+              <text class="pxl" x="240" y="122" font-size="14" fill="#5dff9e" text-anchor="middle">GAME</text>
+              <text x="240" y="148" font-size="13" fill="#a9b1d6" text-anchor="middle">picture (size set by Screen scale)</text>
+
+              <g stroke="#3ef0ff" stroke-width="1.5">
+                <rect x="44" y="104" width="32" height="32" rx="4" fill="#1d2a5c"/>
+                <rect x="12" y="136" width="32" height="32" rx="4" fill="#1d2a5c"/>
+                <rect x="76" y="136" width="32" height="32" rx="4" fill="#1d2a5c"/>
+                <rect x="44" y="168" width="32" height="32" rx="4" fill="#1d2a5c"/>
+                <g fill="#121836" stroke-dasharray="4 3">
+                  <rect x="12" y="104" width="32" height="32" rx="4"/>
+                  <rect x="76" y="104" width="32" height="32" rx="4"/>
+                  <rect x="12" y="168" width="32" height="32" rx="4"/>
+                  <rect x="76" y="168" width="32" height="32" rx="4"/>
+                </g>
+              </g>
+              <g font-size="17" font-weight="700" fill="#c9fbff" text-anchor="middle">
+                <text x="60" y="126">↑</text><text x="28" y="158">←</text><text x="92" y="158">→</text><text x="60" y="190">↓</text>
+              </g>
+              <g font-size="14" fill="#7fbfd0" text-anchor="middle">
+                <text x="28" y="125">↖</text><text x="92" y="125">↗</text><text x="28" y="189">↙</text><text x="92" y="189">↘</text>
+              </g>
+              <text class="pxl" x="60" y="222" font-size="7" fill="#3ef0ff" text-anchor="middle">D-PAD</text>
+              <text x="60" y="236" font-size="11" fill="#a9b1d6" text-anchor="middle">dashed = diagonals</text>
+
+              <circle cx="446" cy="118" r="24" fill="#ff5fa8"/>
+              <text class="pxl" x="446" y="124" font-size="13" fill="#2a0717" text-anchor="middle">A</text>
+              <circle cx="384" cy="186" r="24" fill="#ff5fa8" fill-opacity=".85"/>
+              <text class="pxl" x="384" y="192" font-size="13" fill="#2a0717" text-anchor="middle">B</text>
+              <rect x="397" y="143" width="36" height="18" rx="9" fill="#ffd23f"/>
+              <text class="pxl" x="415" y="155.5" font-size="6" fill="#2a2200" text-anchor="middle">A+B</text>
+
+              <rect x="404" y="12" width="64" height="24" rx="12" fill="#3ef0ff"/>
+              <text class="pxl" x="436" y="28" font-size="8" fill="#041a1e" text-anchor="middle">MENU</text>
+
+              <rect x="150" y="256" width="80" height="24" rx="12" fill="#26305a" stroke="#8f99c9"/>
+              <text class="pxl" x="190" y="272" font-size="7" fill="#e8ebff" text-anchor="middle">SELECT</text>
+              <rect x="250" y="256" width="80" height="24" rx="12" fill="#26305a" stroke="#8f99c9"/>
+              <text class="pxl" x="290" y="272" font-size="7" fill="#e8ebff" text-anchor="middle">START</text>
+
+              <text class="pxl" x="240" y="306" font-size="7" fill="#ffa94d" text-anchor="middle">ONE TOUCH AT A TIME</text>
+            </svg>
+          </svg>
+          <figcaption>Schematic of the touch zones — the real on-screen layout may look a little different.</figcaption>
+        </figure>
+        <p>Touch is great for menus, puzzle games and anything turn-based. For platformers and shooters, a <a href="#controller">wired controller</a> is much better. If taps land in the wrong place, run <strong>Settings → Touch calibration</strong>.</p>
+        <p>The <strong>E32N40T</strong> has no touch panel at all, so a wired controller is required on that board.</p>
+
+        <h3>Board buttons</h3>
+        <dl class="defs">
+          <dt><kbd>BOOT</kbd> (IO0)</dt><dd>Opens the in-game menu while playing. Held at reset, it enters flashing mode.</dd>
+          <dt><kbd>RST</kbd> (EN)</dt><dd>Hardware reset — restarts the board.</dd>
+        </dl>
+
+        <h3 id="controller">Wired controller (recommended)</h3>
+        <p>RetroCYD supports controllers that use the Wii extension protocol over I2C:</p>
+        <ul>
+          <li>Wii <strong>Classic Controller</strong> and <strong>Classic Controller Pro</strong></li>
+          <li><strong>NES Classic Mini</strong> and <strong>SNES Classic Mini</strong> controllers</li>
+        </ul>
+        <p>They plug into a cheap <strong>Wii extension breakout adapter</strong>, which you wire to the board's 4-pin 1.25 mm <strong>I2C</strong> header. Controllers are <strong>hot-pluggable and auto-detected</strong> — just plug one in. Third-party clones exist; most follow the same protocol, but if one isn't detected, try an original.</p>
+        <figure class="figure">
+          <svg class="diagram" viewBox="0 0 680 270" role="img" aria-labelledby="wire-t wire-d">
+            <title id="wire-t">Wiring a Wii extension breakout to the I2C header</title>
+            <desc id="wire-d">Four wires connect the board's I2C header to the breakout: 3V3 to plus, GND to minus, SDA on IO32 to d, SCL on IO25 to c. Use 3.3 volts only.</desc>
+            <rect x="10" y="20" width="230" height="230" rx="12" fill="#141a33" stroke="#ffd23f" stroke-width="2"/>
+            <text class="pxl" x="125" y="48" font-size="9" fill="#ffd23f" text-anchor="middle">BOARD · I2C</text>
+            <text x="125" y="68" font-size="13" fill="#a9b1d6" text-anchor="middle">4-pin 1.25 mm header</text>
+            <rect x="440" y="20" width="230" height="230" rx="12" fill="#141a33" stroke="#3ef0ff" stroke-width="2"/>
+            <text class="pxl" x="555" y="48" font-size="9" fill="#3ef0ff" text-anchor="middle">WII BREAKOUT</text>
+            <text x="555" y="68" font-size="13" fill="#a9b1d6" text-anchor="middle">pads often labelled + − d c</text>
+
+            <g stroke-width="5" fill="none" stroke-linecap="round">
+              <path d="M216 104 C 330 104, 350 104, 464 104" stroke="#ff6b6b"/>
+              <path d="M216 144 C 330 144, 350 144, 464 144" stroke="#8f99c9"/>
+              <path d="M216 184 C 330 184, 350 184, 464 184" stroke="#3ef0ff"/>
+              <path d="M216 224 C 330 224, 350 224, 464 224" stroke="#ffd23f"/>
+            </g>
+            <g fill="#c9a227" stroke="#5b4500">
+              <rect x="206" y="96" width="16" height="16" rx="2"/><rect x="206" y="136" width="16" height="16" rx="2"/><rect x="206" y="176" width="16" height="16" rx="2"/><rect x="206" y="216" width="16" height="16" rx="2"/>
+              <rect x="458" y="96" width="16" height="16" rx="2"/><rect x="458" y="136" width="16" height="16" rx="2"/><rect x="458" y="176" width="16" height="16" rx="2"/><rect x="458" y="216" width="16" height="16" rx="2"/>
+            </g>
+            <g font-size="16" font-weight="700" fill="#e8ebff">
+              <text x="30" y="110">3V3</text><text x="30" y="150">GND</text><text x="30" y="190">SDA · IO32</text><text x="30" y="230">SCL · IO25</text>
+              <text x="488" y="110">+  (3.3 V)</text><text x="488" y="150">−  (GND)</text><text x="488" y="190">d  (data)</text><text x="488" y="230">c  (clock)</text>
+            </g>
+            <text class="pxl" x="340" y="80" font-size="8" fill="#ff6b6b" text-anchor="middle">3.3 V ONLY</text>
+          </svg>
+          <figcaption>Connect by <strong>label</strong>, not by position — check the silkscreen next to the header on your board. Never feed the controller 5 V.</figcaption>
+        </figure>
+        <div class="table-wrap">
+          <table class="data">
+            <caption>I2C header connections</caption>
+            <thead><tr><th scope="col">Board header</th><th scope="col">ESP32 pin</th><th scope="col">Breakout pad</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">3V3</th><td>3.3 V supply</td><td><code>+</code></td></tr>
+              <tr><th scope="row">GND</th><td>Ground</td><td><code>−</code></td></tr>
+              <tr><th scope="row">SDA</th><td>IO32</td><td><code>d</code> (data)</td></tr>
+              <tr><th scope="row">SCL</th><td>IO25</td><td><code>c</code> (clock)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>In game the D-pad, A, B, SELECT (−) and START (+) do what you'd expect. <strong>HOME</strong> opens the in-game menu; on controllers without HOME (NES / SNES Classic Mini) press <strong>SELECT + START</strong>.</p>
+        <p class="muted"><strong>Bluetooth gamepads</strong> aren't supported yet — they're on the <a href="index.html#roadmap">roadmap</a>.</p>
+      </section>
+
+      <!-- ===================================================== 7 MENU -->
+      <section id="menu" aria-labelledby="h-menu">
+        <h2 id="h-menu"><span class="num">07</span> In-game menu</h2>
+        <p>Open it with the <kbd>BOOT</kbd> button on the board, the on-screen <strong>MENU</strong> button, or <strong>HOME</strong> (or <strong>SELECT + START</strong>) on a wired controller. The game pauses while it's open.</p>
+        <dl class="defs">
+          <dt>Resume</dt><dd>Back to the game.</dd>
+          <dt>Save state</dt><dd>Snapshot the game right now into one of 4 slots.</dd>
+          <dt>Load state</dt><dd>Jump back to a saved snapshot.</dd>
+          <dt>Reset</dt><dd>Restart the game, like the console's reset button.</dd>
+          <dt>Screen scale</dt><dd>Change how big the picture is. Bigger pictures mean more pixels over SPI, so fewer frames are shown per second.</dd>
+          <dt>Volume</dt><dd>Adjust sound without leaving the game.</dd>
+          <dt>Quit</dt><dd>Write the battery save and return to the launcher.</dd>
+        </dl>
+      </section>
+
+      <!-- ===================================================== 8 SAVES -->
+      <section id="saves" aria-labelledby="h-saves">
+        <h2 id="h-saves"><span class="num">08</span> Saves &amp; states</h2>
+        <h3>Battery saves (<code>.sav</code>)</h3>
+        <p>Games that saved progress on the cartridge's battery-backed RAM do the same here. RetroCYD writes the save to <code>/saves/&lt;system&gt;/</code> on the SD card when you open the menu, when you quit, and periodically while you play.</p>
+        <div class="notice notice-info">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-5M12 8h.01"/></svg>
+          <div><strong>Before switching off</strong><p>Save in the game, then open the menu or choose Quit. That guarantees the latest save has been written to the card.</p></div>
+        </div>
+        <h3>Save states (<code>.st0</code>–<code>.st3</code>)</h3>
+        <p>Every game gets <strong>4 save-state slots</strong> — instant snapshots you can make anywhere, even in games without a save feature. They live next to the battery saves in <code>/saves/&lt;system&gt;/</code>.</p>
+        <p class="muted">States are emulator snapshots; a future firmware update could make old ones unloadable. For long-term progress, rely on the game's own saves.</p>
+      </section>
+
+      <!-- ===================================================== 9 SETTINGS -->
+      <section id="settings" aria-labelledby="h-settings">
+        <h2 id="h-settings"><span class="num">09</span> Settings</h2>
+        <dl class="defs">
+          <dt>Wi-Fi</dt><dd>Choose, test or forget the Wi-Fi network used for game downloads. See <a href="#wifi">Wi-Fi &amp; free games</a>.</dd>
+          <dt>Game downloads</dt><dd>Download new free games now, turn the automatic download at startup on or off, and pick the systems (NES, Game Boy, Game Boy Color, CHIP-8).</dd>
+          <dt>Volume</dt><dd>Master sound volume.</dd>
+          <dt>Brightness</dt><dd>Backlight level.</dd>
+          <dt>Fast display</dt><dd>Runs the display SPI bus at 80 MHz instead of the default 40 MHz — roughly double the pixel bandwidth, so more frames are shown. Most panels handle it; if you see glitches or noise, turn it off.</dd>
+          <dt>Show FPS</dt><dd>Overlay showing how many frames per second reach the screen.</dd>
+          <dt>Touch calibration</dt><dd>Tap the targets to line up touch with the display. Run it if taps land off-target.</dd>
+          <dt>DMG palette</dt><dd>Choose the colours used for original (monochrome) Game Boy games.</dd>
+          <dt>Rescan library</dt><dd>Rebuild the game index — use it after adding, removing or renaming games.</dd>
+          <dt>About</dt><dd>Firmware version and a QR code that links back to this website.</dd>
+        </dl>
+        <p class="muted">Settings are stored in the NVS area of the flash chip. “Erase device” resets them to defaults; your SD card is unaffected.</p>
+      </section>
+
+      <!-- ===================================================== 10 WIFI -->
+      <section id="wifi" aria-labelledby="h-wifi">
+        <h2 id="h-wifi"><span class="num">10</span> Wi-Fi &amp; free games</h2>
+        <p>RetroCYD can fill your SD card by itself: about <strong>1,000 free homebrew games</strong> for NES, Game Boy, Game Boy Color and CHIP-8, from <a href="https://hh.gbdev.io/">Homebrew Hub</a> and the <a href="https://github.com/JohnEarnest/chip8Archive">CHIP-8 Archive</a>. <a href="games.html#auto">See the full list.</a></p>
+        <ol>
+          <li>Open <strong>Settings → Wi-Fi → Choose network</strong>, tap your network and type the password on the on-screen keyboard (<em>?123</em> switches to symbols, <em>show</em> reveals what you typed). With a controller: D-pad to move, A to type, B to delete, START for OK.</li>
+          <li>RetroCYD connects once to check the password, then saves the network.</li>
+          <li>Open <strong>Settings → Game downloads → Download new games now</strong>. It shows how many games are new and how many MB they take, then downloads them into <code>/roms/&lt;system&gt;/</code>.</li>
+          <li>With <strong>Download at startup</strong> on (the default), every start checks for new games and downloads them automatically. Tap the screen or press B to skip; finished games are kept and the rest continue next time.</li>
+        </ol>
+        <h3>How it works</h3>
+        <ul>
+          <li>The list of games is <a href="catalog/catalog.tsv">a catalog file</a> on this website, rebuilt every week from the Homebrew Hub NES and Game Boy databases and the CHIP-8 Archive. It includes only entries marked as games, only ones the RetroCYD cores can run, and no fan games built on other companies' characters.</li>
+          <li>Every game is downloaded <strong>straight from its source</strong> over HTTPS (certificates are checked). RetroCYD doesn't host any ROMs. Each file must match the size and SHA-1 listed in the catalog or it is thrown away.</li>
+          <li>Games are named by their title, e.g. <code>/roms/gb/Tobu Tobu Girl.gb</code>. Your own files are never overwritten.</li>
+          <li>RetroCYD remembers what it downloaded (<code>/retrocyd/downloaded.txt</code>), so a game you delete stays deleted. <strong>Forget download history</strong> brings deleted games back on the next download.</li>
+          <li>The full set is about 225 MB. The first download takes a while (expect several minutes); later checks only fetch what's new.</li>
+          <li>Wi-Fi is only switched on for downloads and is <strong>always off while you play</strong>, so games get all of the RAM and CPU. If Wi-Fi leaves memory too fragmented, RetroCYD restarts itself once afterwards (you'll see a short message).</li>
+        </ul>
+        <p><strong>About the stored password:</strong> the Wi-Fi password is saved in the board's settings area <em>without encryption</em>. Encrypting flash on an ESP32 means burning eFuses, which RetroCYD never does. Anyone holding the board could read it, so a guest network is a good idea.</p>
+        <p class="muted">2.4 GHz networks only (the ESP32 has no 5 GHz radio). WPA2 and WPA3 personal networks and open networks work; enterprise (802.1X) networks and hotel-style sign-in pages don't.</p>
+      </section>
+
+      <!-- ===================================================== 11 AUDIO -->
+      <section id="audio" aria-labelledby="h-audio">
+        <h2 id="h-audio"><span class="num">11</span> Audio</h2>
+        <p>Sound comes from the ESP32's built-in DAC (IO26) into the board's amplifier (enabled on IO4) and out through the <strong>1.25 mm 2-pin speaker connector</strong>. Use an <strong>8 Ω 1.5 W</strong> or <strong>4 Ω 2 W</strong> speaker. It's an 8-bit DAC — perfect for 8-bit chiptunes, not hi-fi.</p>
+        <p>Change the level under Settings → Volume, or from the in-game menu.</p>
+      </section>
+
+      <!-- ===================================================== 12 PINOUT -->
+      <section id="pinout" aria-labelledby="h-pinout">
+        <h2 id="h-pinout"><span class="num">12</span> Pinout &amp; flash layout</h2>
+        <p>Pin assignments of the 4.0″ ESP32-32E board (per <a href="https://www.lcdwiki.com/4.0inch_ESP32-32E_Display">LCDwiki</a>), as used by RetroCYD:</p>
+        <div class="table-wrap">
+          <table class="data">
+            <thead><tr><th scope="col">Function</th><th scope="col">Pins</th><th scope="col">Notes</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">LCD (ST7796S)</th><td>SCK <code>IO14</code> · MOSI <code>IO13</code> · MISO <code>IO12</code> · CS <code>IO15</code> · DC <code>IO2</code></td><td>Reset tied to EN</td></tr>
+              <tr><th scope="row">Backlight</th><td><code>IO27</code></td><td>Active high</td></tr>
+              <tr><th scope="row">Touch (XPT2046)</th><td>CS <code>IO33</code> · IRQ <code>IO36</code></td><td>Shares the LCD SPI bus</td></tr>
+              <tr><th scope="row">microSD</th><td>SCK <code>IO18</code> · MISO <code>IO19</code> · MOSI <code>IO23</code> · CS <code>IO5</code></td><td>Separate SPI bus</td></tr>
+              <tr><th scope="row">Audio</th><td>DAC <code>IO26</code> · amp enable <code>IO4</code></td><td>Amp on when IO4 is low</td></tr>
+              <tr><th scope="row">RGB LED</th><td>R <code>IO22</code> · G <code>IO16</code> · B <code>IO17</code></td><td>Active low</td></tr>
+              <tr><th scope="row">Battery sense</th><td><code>IO34</code></td><td>ADC input</td></tr>
+              <tr><th scope="row">I2C header</th><td>SCL <code>IO25</code> · SDA <code>IO32</code></td><td>Wired controller · 3.3 V</td></tr>
+              <tr><th scope="row">Expansion (input-only)</th><td><code>IO35</code> · <code>IO39</code></td><td>No output, no pull-ups</td></tr>
+              <tr><th scope="row">BOOT button</th><td><code>IO0</code></td><td>Menu in game · download mode at reset</td></tr>
+              <tr><th scope="row">USB-C</th><td>UART0 via CH340-type USB-serial</td><td>Flashing &amp; power</td></tr>
+              <tr><th scope="row">Memory</th><td>4 MB SPI flash · 520 KB SRAM</td><td>No PSRAM</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="flash-layout">Flash layout (4 MB)</h3>
+        <div class="flashmap" role="img" aria-label="Flash layout: bootloader, partition table and NVS settings at the start, then a 1.9 megabyte app partition, then a 2.1 megabyte ROM cache.">
+          <div class="flashmap-bar" aria-hidden="true">
+            <div class="fm-boot">BOOT</div>
+            <div class="fm-app">APP 1.9 MB</div>
+            <div class="fm-rom">ROM CACHE 2.1 MB</div>
+          </div>
+          <ul class="flashmap-legend" aria-hidden="true">
+            <li><i style="background:var(--magenta)"></i>Bootloader · partition table · NVS (settings)</li>
+            <li><i style="background:var(--cyan)"></i>Application — 1,920 KB at 0x10000</li>
+            <li><i style="background:var(--yellow)"></i>ROM cache — 2,112 KB at 0x1F0000</li>
+          </ul>
+        </div>
+        <p class="muted">The web installer writes the bootloader (<code>0x1000</code>), partition table (<code>0x8000</code>) and app (<code>0x10000</code>) separately, so your settings survive updates. The merged download image starts at offset <code>0x0</code>. The ROM cache is filled at runtime when you launch a game.</p>
+      </section>
+
+      <!-- ===================================================== 13 TROUBLESHOOTING -->
+      <section id="troubleshooting" aria-labelledby="h-trouble">
+        <h2 id="h-trouble"><span class="num">13</span> Troubleshooting</h2>
+        <div class="trouble">
+          <div>
+            <h3>No serial port in the list</h3>
+            <ul>
+              <li>The cable is probably charge-only — try a known data cable.</li>
+              <li>Install the <a href="#drivers">CH340 driver</a> (Windows / older macOS).</li>
+              <li>Try another USB port; skip hubs and front-panel ports.</li>
+              <li>Close other programs that may hold the port (serial monitors, slicers, other flashers).</li>
+            </ul>
+          </div>
+          <div>
+            <h3>“Failed to connect” / timed out</h3>
+            <p>Hold <kbd>BOOT</kbd> while you click Connect, then release once it starts. Still failing? Hold <kbd>BOOT</kbd>, tap <kbd>RST</kbd>, release <kbd>BOOT</kbd>, and try again.</p>
+          </div>
+          <div>
+            <h3>Install stops half-way</h3>
+            <p>Usually a flaky cable or USB port. Use a short cable straight into the computer and install again with <em>Erase device</em> ticked.</p>
+          </div>
+          <div>
+            <h3>White screen after flashing</h3>
+            <p>Your board is probably a different CYD variant: RetroCYD is built for the 4.0″ ESP32-32E (E32R40T / E32N40T) only. Other models use different displays and pins. Flashing is harmless; put your previous firmware back if needed.</p>
+          </div>
+          <div>
+            <h3>SD card not detected</h3>
+            <ul>
+              <li>It must be FAT32 — not exFAT or NTFS. Cards over 32 GB need <a href="#sd-card">reformatting</a>.</li>
+              <li>Power off, re-seat the card until it clicks, power on.</li>
+              <li>Try another card; some very old or no-name cards are unreliable.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Games don't show up</h3>
+            <ul>
+              <li>Check the folder (<code>/roms/nes</code>, <code>/roms/gb</code>, <code>/roms/gbc</code>, <code>/roms/chip8</code>) and the file extension.</li>
+              <li>Run <strong>Settings → Rescan library</strong>.</li>
+              <li>ROMs over 2 MB, and ZIPs with more than one file, won't load.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Wi-Fi won't connect / downloads fail</h3>
+            <ul>
+              <li>Use a 2.4 GHz network; the ESP32 can't see 5 GHz ones. Hidden networks: <em>Choose network → Other / hidden network</em>.</li>
+              <li>“Wrong password”: passwords are case-sensitive. Tap <em>show</em> to check what you typed.</li>
+              <li>Downloads that fail are retried on the next run. If the SD card is full, the download stops with a message.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Touch is offset</h3>
+            <p>Run <strong>Settings → Touch calibration</strong>. Resistive panels respond best to a fingernail or stylus tip.</p>
+          </div>
+          <div>
+            <h3>Only one button works at a time</h3>
+            <p>That's the resistive single-touch panel. Use the diagonal D-pad zones and the A+B zone, or plug in a <a href="#controller">wired controller</a>.</p>
+          </div>
+          <div>
+            <h3>Game list slow the first time</h3>
+            <p>That's the one-time index build — a few seconds for ~10,000 files. Let it finish; afterwards the folder opens instantly.</p>
+          </div>
+          <div>
+            <h3>Choppy picture</h3>
+            <p>Turn on <strong>Fast display</strong> in Settings and/or choose a smaller <strong>Screen scale</strong> in the in-game menu. Game speed itself is unaffected — only the displayed frame rate changes.</p>
+          </div>
+          <div>
+            <h3>Controller not detected</h3>
+            <ul>
+              <li>Re-check the wiring by label: SDA → <code>d</code>, SCL → <code>c</code>, 3V3 → <code>+</code>, GND → <code>−</code>.</li>
+              <li>Push the controller plug fully into the breakout.</li>
+              <li>Some cheap clones misbehave — try an original controller.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>No sound</h3>
+            <p>Check the speaker is plugged into the speaker connector and that Volume isn't at zero (Settings or in-game menu).</p>
+          </div>
+          <div>
+            <h3>Lost progress</h3>
+            <p>Battery saves reach the card on menu-open, quit and periodically. Save in-game, then open the menu or Quit before you cut power.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================== 14 FAQ -->
+      <section id="faq" aria-labelledby="h-faq">
+        <h2 id="h-faq"><span class="num">14</span> FAQ</h2>
+        <div class="faq">
+          <details>
+            <summary>Is RetroCYD free?</summary>
+            <div class="a"><p>Yes. The firmware, the web flasher and the guide are free to use.</p></div>
+          </details>
+          <details>
+            <summary>Is this legal?</summary>
+            <div class="a"><p>Emulators themselves are legal. What matters is where your games come from. RetroCYD ships with no games and is meant for homebrew, public-domain and freely licensed games — plus backups of cartridges you own where your local law allows. See <a href="games.html">Free &amp; legal games</a>.</p></div>
+          </details>
+          <details>
+            <summary>Can flashing brick my board?</summary>
+            <div class="a"><p>No. The flasher only writes the flash chip and never burns eFuses, so the ESP32's ROM bootloader is always there to flash again. See <a href="#safety">Safety &amp; recovery</a>.</p></div>
+          </details>
+          <details>
+            <summary>Will “Erase device” delete my games or saves?</summary>
+            <div class="a"><p>No. It only erases the board's flash chip (firmware, settings, ROM cache). Games and saves live on the SD card and are never touched.</p></div>
+          </details>
+          <details>
+            <summary>How do I update to a new version?</summary>
+            <div class="a"><p>Flash it again from the <a href="index.html#flash">web installer</a>. Erasing isn't required for updates. Your SD card is never touched, and the web installer keeps RetroCYD's settings (including touch calibration) unless you tick “Erase device”.</p></div>
+          </details>
+          <details>
+            <summary>Can I flash from my phone, Firefox or Safari?</summary>
+            <div class="a"><p>No — the web installer needs the Web Serial API, which only desktop Chrome, Edge and Opera provide. Alternatively, download the .bin and use <a href="#manual-flash">esptool</a> on any OS.</p></div>
+          </details>
+          <details>
+            <summary>Does it work on the 2.8″ CYD or other variants?</summary>
+            <div class="a"><p>No. RetroCYD is built for the 4.0″ ESP32-32E (E32R40T / E32N40T) only. Other variants use different displays and pins.</p></div>
+          </details>
+          <details>
+            <summary>Why no SNES, GBA, Genesis, N64 or PS1?</summary>
+            <div class="a"><p>One ESP32 with 520 KB of RAM, no PSRAM and an SPI-connected display can't emulate those at a playable speed — and many of their games don't fit in the 2 MB ROM cache. <a href="index.html#systems">Details here.</a></p></div>
+          </details>
+          <details>
+            <summary>What's the biggest ROM I can play?</summary>
+            <div class="a"><p>2 MB (plus 64 KB), the size of the ROM cache. Almost all NES, Game Boy and CHIP-8 homebrew is far smaller.</p></div>
+          </details>
+          <details>
+            <summary>Does the ROM cache wear out the flash?</summary>
+            <div class="a"><p>Not in any practical sense. The cache is only rewritten when you launch a <em>different</em> game, and flash chips like this are typically rated for around 100,000 erase cycles per sector.</p></div>
+          </details>
+          <details>
+            <summary>A NES game says “Mapper N not supported”</summary>
+            <div class="a"><p>NES cartridges used different circuit boards (“mappers”). RetroCYD supports mappers 0 (NROM), 1 (MMC1), 2 (UxROM), 3 (CNROM), 4 (MMC3 / MMC6), 7 (AxROM), 9 (MMC2), 10 (MMC4), 11 (Color Dreams), 66 (GxROM) and 71 (Camerica). That covers most homebrew and most of the NES library. Games on other boards show this message and return to the browser; nothing is changed on the SD card.</p></div>
+          </details>
+          <details>
+            <summary>Are the downloaded games legal?</summary>
+            <div class="a"><p>Yes. They are homebrew games their authors publish for free on Homebrew Hub, and CHIP-8 programs released into the public domain (CC0). RetroCYD downloads each one straight from that source, just as clicking “Download” on the website would. Respect each game's licence if you share them.</p></div>
+          </details>
+          <details>
+            <summary>Does Wi-Fi slow down games?</summary>
+            <div class="a"><p>No. The radio is switched off before a game starts and only comes back on for downloads in the launcher.</p></div>
+          </details>
+          <details>
+            <summary>Do I need to unzip my games?</summary>
+            <div class="a"><p>No. A ZIP that contains a single ROM (deflate or stored) works directly.</p></div>
+          </details>
+          <details>
+            <summary>Can I press two touch buttons at once?</summary>
+            <div class="a"><p>No — the resistive panel senses one touch at a time. Use the A+B zone and the diagonal D-pad zones, or a wired controller.</p></div>
+          </details>
+          <details>
+            <summary>Are Bluetooth controllers supported?</summary>
+            <div class="a"><p>Not yet. They're on the <a href="index.html#roadmap">roadmap</a>. For now, use a Wii Classic or NES / SNES Classic Mini controller on the I2C header.</p></div>
+          </details>
+          <details>
+            <summary>Does CHIP-8 support include XO-CHIP?</summary>
+            <div class="a"><p>RetroCYD runs CHIP-8 and SUPER-CHIP programs. XO-CHIP — the extended variant used by many recent Octojam games — isn't supported, so check a game's platform before copying it over.</p></div>
+          </details>
+          <details>
+            <summary>Can it run on a battery?</summary>
+            <div class="a"><p>The board has a 1.25 mm 2-pin connector for a single-cell 3.7 V LiPo. Check the plug's polarity against the board markings before connecting — sellers wire these plugs differently.</p></div>
+          </details>
+          <details>
+            <summary>How can I help?</summary>
+            <div class="a"><p>Report bugs and share ideas in the <a href="https://github.com/PierreGode/Retro-CYD/issues">issue tracker</a>. Telling homebrew developers you enjoyed their game helps too.</p></div>
+          </details>
+        </div>
+      </section>
+
+
+    </article>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="index.html" aria-label="RetroCYD home">
+          <svg viewBox="0 0 32 32" aria-hidden="true" shape-rendering="crispEdges"><rect x="1" y="5" width="30" height="22" rx="3" fill="#ffd23f"/><rect x="4" y="8" width="24" height="16" fill="#0a0e1d"/><rect x="7" y="15" width="7" height="2" fill="#3ef0ff"/><rect x="9.5" y="12.5" width="2" height="7" fill="#3ef0ff"/><rect x="19" y="16" width="3" height="3" fill="#ff5fa8"/><rect x="23" y="13" width="3" height="3" fill="#ff5fa8"/></svg>
+          <span>RETRO<b>CYD</b></span>
+        </a>
+        <p style="margin-top:1rem">Free retro game firmware for the 4.0″ ESP32 “Cheap Yellow Display”.</p>
+      </div>
+      <div>
+        <h2>Site</h2>
+        <ul>
+          <li><a href="index.html#flash">Web flasher</a></li>
+          <li><a href="guide.html">Guide</a></li>
+          <li><a href="games.html">Free &amp; legal games</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Project</h2>
+        <ul>
+          <li><a href="https://github.com/PierreGode/Retro-CYD">GitHub</a></li>
+          <li><a href="https://github.com/PierreGode/Retro-CYD/issues">Report an issue</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="disclaimer">
+      <p>RetroCYD is an independent hobby project. It is not affiliated with, endorsed or sponsored by Nintendo, Sega, Sony or any other console maker, nor by LCDwiki, Sunton or Espressif. All trademarks belong to their respective owners; system names are used only to describe compatibility.</p>
+      <p>RetroCYD ships with no games. Please only play homebrew, public-domain or freely licensed software, or backups of games you own where your local law allows it.</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

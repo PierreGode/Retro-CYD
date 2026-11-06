@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RetroCYD — retro game firmware for the ESP32 Cheap Yellow Display</title>
+  <meta name="description" content="RetroCYD is free firmware that turns the 4.0&quot; ESP32 Cheap Yellow Display into a pocket retro console for NES, Game Boy, Game Boy Color and CHIP-8 homebrew. Flash it straight from your browser.">
+  <meta name="theme-color" content="#06070f">
+  <link rel="canonical" href="https://pierregode.github.io/Retro-CYD/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="RetroCYD — a pocket retro console from a Cheap Yellow Display">
+  <meta property="og:description" content="Free NES, Game Boy, Game Boy Color and CHIP-8 emulator firmware for the ESP32 CYD 4.0&quot; touch board. Flash it from your browser.">
+  <meta property="og:url" content="https://pierregode.github.io/Retro-CYD/">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,600;0,700;1,400&amp;family=Press+Start+2P&amp;display=swap">
+  <link rel="stylesheet" href="assets/style.css">
+  <!-- ESP Web Tools — pinned exact version -->
+  <script type="module" src="https://unpkg.com/esp-web-tools@10.4.0/dist/web/install-button.js?module"></script>
+  <script src="assets/site.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html" aria-label="RetroCYD home">
+      <svg viewBox="0 0 32 32" aria-hidden="true" shape-rendering="crispEdges"><rect x="1" y="5" width="30" height="22" rx="3" fill="#ffd23f"/><rect x="4" y="8" width="24" height="16" fill="#0a0e1d"/><rect x="7" y="15" width="7" height="2" fill="#3ef0ff"/><rect x="9.5" y="12.5" width="2" height="7" fill="#3ef0ff"/><rect x="19" y="16" width="3" height="3" fill="#ff5fa8"/><rect x="23" y="13" width="3" height="3" fill="#ff5fa8"/></svg>
+      <span>RETRO<b>CYD</b></span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">MENU</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html" aria-current="page">Home</a></li>
+        <li><a href="guide.html">Guide</a></li>
+        <li><a href="games.html">Free games</a></li>
+        <li><a href="guide.html#faq">FAQ</a></li>
+        <li><a href="https://github.com/PierreGode/Retro-CYD">GitHub</a></li>
+        <li><a class="nav-cta" href="#flash">Flash now</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============================================================ HERO -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-sun" aria-hidden="true"></div>
+    <div class="hero-floor" aria-hidden="true"></div>
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">Free firmware · ESP32 · 4.0″ CYD</p>
+        <h1 id="hero-title"><span class="logo-retro">RETRO</span><span class="logo-cyd">CYD</span></h1>
+        <p class="tagline">Turn a <em>Cheap Yellow Display</em> into a pocket retro console.</p>
+        <p class="lead">Free firmware for the 4.0″ ESP32 touch board that plays NES, Game Boy, Game Boy Color and CHIP-8 homebrew from a microSD card. Flash it straight from your browser — no toolchain, no command line.</p>
+        <div class="btn-row">
+          <a class="btn" href="#flash">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
+            Flash firmware
+          </a>
+          <a class="btn btn-ghost" href="games.html">Find free games</a>
+        </div>
+        <ul class="hero-meta" aria-label="At a glance">
+          <li>NES · GB · GBC · CHIP-8</li>
+          <li>Touch or wired controller</li>
+          <li>Never burns eFuses</li>
+        </ul>
+      </div>
+
+      <div class="board-wrap">
+        <svg class="board-svg" viewBox="0 0 600 420" role="img" aria-labelledby="board-title board-desc">
+          <title id="board-title">The 4.0-inch ESP32 board running the RetroCYD launcher</title>
+          <desc id="board-desc">A yellow circuit board with a 480 by 320 screen. The screen shows the RetroCYD launcher: four system tiles (NES, Game Boy, Game Boy Color, CHIP-8), a recently played list, and an A to Z quick-jump bar on the right edge.</desc>
+          <defs>
+            <linearGradient id="pcb" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#ffdd55"/>
+              <stop offset="1" stop-color="#e2ad00"/>
+            </linearGradient>
+            <linearGradient id="scr" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#0d1430"/>
+              <stop offset="1" stop-color="#070a18"/>
+            </linearGradient>
+            <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#ffffff" stop-opacity=".10"/>
+              <stop offset=".45" stop-color="#ffffff" stop-opacity=".02"/>
+              <stop offset=".46" stop-color="#ffffff" stop-opacity="0"/>
+            </linearGradient>
+            <radialGradient id="vig" cx=".5" cy=".5" r=".75">
+              <stop offset=".6" stop-color="#000" stop-opacity="0"/>
+              <stop offset="1" stop-color="#000" stop-opacity=".55"/>
+            </radialGradient>
+            <pattern id="scan" width="4" height="3" patternUnits="userSpaceOnUse">
+              <rect width="4" height="1" fill="#000" fill-opacity=".35"/>
+            </pattern>
+          </defs>
+
+          <!-- PCB -->
+          <rect x="10" y="10" width="580" height="400" rx="18" fill="url(#pcb)" stroke="#a87f00" stroke-width="2"/>
+          <g fill="#c99a14" stroke="#8f6d00" stroke-width="1.5">
+            <circle cx="30" cy="30" r="11"/><circle cx="570" cy="30" r="11"/>
+            <circle cx="30" cy="390" r="11"/><circle cx="570" cy="390" r="11"/>
+          </g>
+          <g fill="#06070f">
+            <circle cx="30" cy="30" r="6"/><circle cx="570" cy="30" r="6"/>
+            <circle cx="30" cy="390" r="6"/><circle cx="570" cy="390" r="6"/>
+          </g>
+          <!-- USB-C -->
+          <rect x="0" y="182" width="24" height="56" rx="7" fill="#c3c7d4" stroke="#7d8294" stroke-width="2"/>
+          <rect x="6" y="194" width="8" height="32" rx="4" fill="#2a2e3b"/>
+          <!-- buttons -->
+          <g>
+            <rect x="562" y="160" width="20" height="20" rx="3" fill="#cfd3de" stroke="#6f7384"/>
+            <circle cx="572" cy="170" r="5" fill="#3b3f4d"/>
+            <rect x="562" y="236" width="20" height="20" rx="3" fill="#cfd3de" stroke="#6f7384"/>
+            <circle cx="572" cy="246" r="5" fill="#3b3f4d"/>
+          </g>
+          <g font-family="IBM Plex Mono, monospace" font-size="9" font-weight="600" fill="#5b4500">
+            <text x="556" y="196" text-anchor="end">BOOT</text>
+            <text x="556" y="272" text-anchor="end">RST</text>
+            <text x="300" y="403" text-anchor="middle" letter-spacing="1">ESP32-32E · 4.0&quot; · ST7796S · 320×480</text>
+          </g>
+
+          <!-- bezel + screen -->
+          <rect x="44" y="28" width="512" height="358" rx="8" fill="#05060c" stroke="#1b1f2e" stroke-width="2"/>
+          <svg x="60" y="44" width="480" height="320" viewBox="0 0 480 320">
+            <rect width="480" height="320" fill="url(#scr)"/>
+            <!-- top bar -->
+            <rect width="480" height="30" fill="#121a40"/>
+            <text class="px" x="12" y="21" font-size="12" fill="#e8ebff">RETRO<tspan fill="#ffd23f">CYD</tspan></text>
+            <text x="404" y="20" font-size="11" font-family="IBM Plex Sans, sans-serif" font-weight="600" fill="#8f99c9" text-anchor="end">microSD · 4 312 games</text>
+            <circle cx="430" cy="15" r="6.5" fill="none" stroke="#8f99c9" stroke-width="3.5" stroke-dasharray="2.6 2.1"/>
+            <circle cx="430" cy="15" r="2.2" fill="#8f99c9"/>
+
+            <!-- system tiles -->
+            <g font-family="IBM Plex Sans, sans-serif">
+              <g>
+                <rect x="12" y="40" width="100" height="94" rx="8" fill="#16183c" stroke="#ff5fa8" stroke-opacity=".7" stroke-width="1.5"/>
+                <rect x="22" y="50" width="26" height="30" rx="3" fill="#ff5fa8"/><rect x="26" y="56" width="18" height="11" fill="#16183c"/>
+                <text class="px" x="22" y="102" font-size="11" fill="#ffc2de">NES</text>
+                <text x="22" y="122" font-size="11" fill="#9aa3cf">2 148 games</text>
+              </g>
+              <g>
+                <rect x="122" y="40" width="100" height="94" rx="8" fill="#13233a" stroke="#ffd23f" stroke-width="3"/>
+                <rect class="sel" x="118" y="36" width="108" height="102" rx="11" fill="none" stroke="#ffd23f" stroke-opacity=".55" stroke-width="2"/>
+                <rect x="132" y="50" width="26" height="30" rx="3" fill="#5dff9e"/><rect x="136" y="56" width="18" height="11" fill="#13233a"/>
+                <text class="px" x="132" y="102" font-size="11" fill="#c8ffd9">GB</text>
+                <text x="132" y="122" font-size="11" fill="#9aa3cf">1 302 games</text>
+              </g>
+              <g>
+                <rect x="232" y="40" width="100" height="94" rx="8" fill="#10223a" stroke="#3ef0ff" stroke-opacity=".7" stroke-width="1.5"/>
+                <rect x="242" y="50" width="26" height="30" rx="3" fill="#3ef0ff"/><rect x="246" y="56" width="18" height="11" fill="#10223a"/>
+                <text class="px" x="242" y="102" font-size="11" fill="#c9fbff">GBC</text>
+                <text x="242" y="122" font-size="11" fill="#9aa3cf">766 games</text>
+              </g>
+              <g>
+                <rect x="342" y="40" width="100" height="94" rx="8" fill="#22200f" stroke="#ffd23f" stroke-opacity=".55" stroke-width="1.5"/>
+                <rect x="352" y="52" width="26" height="26" rx="2" fill="#ffd23f"/>
+                <g fill="#ffd23f"><rect x="355" y="47" width="3" height="5"/><rect x="363" y="47" width="3" height="5"/><rect x="371" y="47" width="3" height="5"/><rect x="355" y="78" width="3" height="5"/><rect x="363" y="78" width="3" height="5"/><rect x="371" y="78" width="3" height="5"/></g>
+                <text class="px" x="365" y="70" font-size="9" fill="#22200f" text-anchor="middle">8</text>
+                <text class="px" x="352" y="102" font-size="11" fill="#fff0bf">CHIP-8</text>
+                <text x="352" y="122" font-size="11" fill="#9aa3cf">96 games</text>
+              </g>
+            </g>
+
+            <!-- recently played -->
+            <text class="px" x="12" y="156" font-size="8" fill="#3ef0ff">RECENTLY PLAYED</text>
+            <rect x="12" y="162" width="430" height="1" fill="#26305a"/>
+            <g font-family="IBM Plex Sans, sans-serif">
+              <rect x="12" y="168" width="430" height="28" rx="5" fill="#1a2148"/>
+              <rect x="12" y="168" width="4" height="28" rx="2" fill="#ffd23f"/>
+              <polygon class="blink" points="24,176 24,188 31,182" fill="#ffd23f"/>
+              <rect x="38" y="174" width="38" height="16" rx="3" fill="#5dff9e"/><text class="px" x="57" y="186" font-size="7" fill="#0b1a10" text-anchor="middle">GB</text>
+              <text x="86" y="187" font-size="13" font-weight="700" fill="#e8ebff">Astro Drift</text>
+              <text x="432" y="186" font-size="10" fill="#8f99c9" text-anchor="end">state 1 · 2 min ago</text>
+
+              <rect x="38" y="206" width="38" height="16" rx="3" fill="#ff5fa8"/><text class="px" x="57" y="218" font-size="7" fill="#2a0717" text-anchor="middle">NES</text>
+              <text x="86" y="219" font-size="13" font-weight="600" fill="#cfd5f5">Cave Crawler DX</text>
+              <text x="432" y="218" font-size="10" fill="#8f99c9" text-anchor="end">yesterday</text>
+
+              <rect x="38" y="236" width="38" height="16" rx="3" fill="#3ef0ff"/><text class="px" x="57" y="248" font-size="7" fill="#06232a" text-anchor="middle">GBC</text>
+              <text x="86" y="249" font-size="13" font-weight="600" fill="#cfd5f5">Pixel Garden</text>
+              <text x="432" y="248" font-size="10" fill="#8f99c9" text-anchor="end">3 days ago</text>
+
+              <rect x="38" y="266" width="38" height="16" rx="3" fill="#ffd23f"/><text class="px" x="57" y="278" font-size="7" fill="#2a2200" text-anchor="middle">CH8</text>
+              <text x="86" y="279" font-size="13" font-weight="600" fill="#cfd5f5">Rocket Hop</text>
+              <text x="432" y="278" font-size="10" fill="#8f99c9" text-anchor="end">last week</text>
+            </g>
+
+            <!-- A-Z quick jump -->
+            <rect x="452" y="42" width="22" height="252" rx="6" fill="#0f1533" stroke="#26305a"/>
+            <g font-family="IBM Plex Mono, monospace" font-size="8" font-weight="600" fill="#8f99c9" text-anchor="middle">
+              <text x="463" y="54.0">A</text><text x="463" y="63.4">B</text><rect x="454" y="65.2" width="18" height="10" rx="2" fill="#ffd23f"/><text x="463" y="72.7" fill="#111">C</text><text x="463" y="82.0">D</text><text x="463" y="91.4">E</text><text x="463" y="100.8">F</text><text x="463" y="110.1">G</text><text x="463" y="119.5">H</text><text x="463" y="128.8">I</text><text x="463" y="138.1">J</text><text x="463" y="147.5">K</text><text x="463" y="156.8">L</text><text x="463" y="166.2">M</text><text x="463" y="175.6">N</text><text x="463" y="184.9">O</text><text x="463" y="194.2">P</text><text x="463" y="203.6">Q</text><text x="463" y="212.9">R</text><text x="463" y="222.3">S</text><text x="463" y="231.7">T</text><text x="463" y="241.0">U</text><text x="463" y="250.3">V</text><text x="463" y="259.7">W</text><text x="463" y="269.0">X</text><text x="463" y="278.4">Y</text><text x="463" y="287.8">Z</text>
+            </g>
+
+            <!-- hint bar -->
+            <rect y="298" width="480" height="22" fill="#121a40"/>
+            <g class="px" font-size="7">
+              <circle cx="20" cy="309" r="7" fill="#ff5fa8"/><text x="20" y="312.5" fill="#1a0610" text-anchor="middle">A</text>
+              <text x="32" y="312.5" fill="#a9b1d6">PLAY</text>
+              <circle cx="88" cy="309" r="7" fill="#3ef0ff"/><text x="88" y="312.5" fill="#041a1e" text-anchor="middle">B</text>
+              <text x="100" y="312.5" fill="#a9b1d6">BACK</text>
+              <text x="468" y="312.5" fill="#6f79a8" text-anchor="end">DRAG TO SCROLL</text>
+            </g>
+
+            <!-- CRT layers -->
+            <rect width="480" height="320" fill="url(#scan)"/>
+            <rect width="480" height="320" fill="url(#vig)"/>
+          </svg>
+          <rect x="60" y="44" width="480" height="320" fill="url(#glass)" pointer-events="none"/>
+        </svg>
+        <p class="board-caption">Stylised illustration · 4.0″ ESP32-32E (E32R40T) running the RetroCYD launcher. Game titles shown are made-up examples.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ STATS -->
+  <div class="container">
+    <div class="stats" role="list" aria-label="RetroCYD in numbers">
+      <div class="stat" role="listitem"><b>4</b><span>systems: NES, Game Boy, Game Boy Color, CHIP-8</span></div>
+      <div class="stat" role="listitem"><b>~10K</b><span>files in a folder? Indexed in seconds, then instant</span></div>
+      <div class="stat" role="listitem"><b>~1000</b><span>free homebrew games, downloaded over Wi-Fi</span></div>
+      <div class="stat" role="listitem"><b>4</b><span>save-state slots per game, plus battery saves</span></div>
+      <div class="stat" role="listitem"><b>0</b><span>eFuses ever burned. Fully reversible.</span></div>
+    </div>
+  </div>
+
+  <!-- ============================================================ FEATURES -->
+  <section class="section" id="features" aria-labelledby="features-title">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">What you get</p>
+        <h2 id="features-title">A real little <span class="accent">console</span>, not a tech demo</h2>
+        <p>Everything below is in the firmware today. Things that aren't done yet live on the <a href="#roadmap">roadmap</a>, not here.</p>
+      </div>
+      <div class="grid grid-4">
+        <article class="card y">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2h9l3 3v17H6z"/><path d="M9 6h6v6H9z"/><path d="M9 16h6"/></svg></div>
+          <h3>Four systems</h3>
+          <p>NES (Famicom), Game Boy, Game Boy Color and CHIP-8 / SUPER-CHIP — all in one firmware.</p>
+        </article>
+        <article class="card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h11M4 12h11M4 18h11"/><path d="M20 4v16"/><path d="M18 8h4M18 14h4"/></svg></div>
+          <h3>Launcher for huge libraries</h3>
+          <p>System tiles, a recently-played list, an A–Z quick-jump bar and touch-drag scrolling. Big folders get a sorted index on the SD card the first time (a few seconds for ~10,000 files), then open instantly. Subfolders welcome.</p>
+        </article>
+        <article class="card m">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/><path d="M9 9h6v6H9z"/></svg></div>
+          <h3>Flash ROM cache</h3>
+          <p>Games are copied from SD into a 2 MB flash partition and run from there. A new game takes a couple of seconds (with a progress bar); relaunching the same one is instant. ZIPs with a single ROM work too.</p>
+        </article>
+        <article class="card g">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 3h13l3 3v15H4z"/><path d="M8 3v6h8V3"/><rect x="7" y="13" width="10" height="8"/></svg></div>
+          <h3>Saves that stick</h3>
+          <p>Battery saves (<code>.sav</code>) are written to the SD card when you open the menu, quit, and periodically while playing. Plus 4 save-state slots per game.</p>
+        </article>
+        <article class="card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg></div>
+          <h3>Menu &amp; settings</h3>
+          <p>In game: resume, save/load state, reset, screen scale, volume, quit — open it with BOOT, the on-screen MENU button, or HOME on a controller. Settings: backlight, fast display, FPS counter, touch calibration, Game Boy palette and more.</p>
+        </article>
+        <article class="card y">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="11" rx="5"/><path d="M7 10v5M4.5 12.5h5"/><circle cx="15.5" cy="11.5" r="1"/><circle cx="18" cy="14" r="1"/></svg></div>
+          <h3>Touch or real buttons</h3>
+          <p>An on-screen gamepad for quick play, or plug in a Wii Classic Controller (Pro) or a NES / SNES Classic Mini controller via the I2C header. Hot-plug, auto-detected.</p>
+        </article>
+        <article class="card m">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg></div>
+          <h3>Actual sound</h3>
+          <p>Audio through the board's DAC and on-board amplifier to the 1.25 mm speaker connector. Add a small 8 Ω or 4 Ω speaker and you're done.</p>
+        </article>
+        <article class="card g">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8.5a15 15 0 0 1 20 0"/><path d="M5.5 12a10 10 0 0 1 13 0"/><path d="M9 15.5a5 5 0 0 1 6 0"/><path d="M12 19h.01"/></svg></div>
+          <h3>Free games over Wi-Fi</h3>
+          <p>Pick your Wi-Fi in Settings and RetroCYD downloads about 1,000 free homebrew games from <a href="games.html#auto">Homebrew Hub and the CHIP-8 Archive</a> — automatically at startup, or when you tap “Download now”. Each file is checked before it's kept.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ FLASH -->
+  <section class="section band" id="flash" aria-labelledby="flash-title">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Web installer</p>
+        <h2 id="flash-title">Flash it from your <span class="accent">browser</span></h2>
+        <p>Uses <a href="https://esphome.github.io/esp-web-tools/">ESP Web Tools</a> and the Web Serial API. Works in desktop <strong>Chrome</strong>, <strong>Edge</strong> and <strong>Opera</strong>. It only ever writes the flash chip — <a href="#safety">it never burns eFuses</a>.</p>
+      </div>
+
+      <div class="flash-grid">
+        <div>
+          <ol class="steps">
+            <li><div>
+              <h3>Plug the board in</h3>
+              <p>Use a USB-C <strong>data</strong> cable. Many cables in drawers are charge-only and the board simply won't show up.</p>
+            </div></li>
+            <li><div>
+              <h3>Pick your board</h3>
+              <p>RetroCYD is built for the 4.0″ ESP32-32E (E32R40T with touch, E32N40T without). Other CYD variants use different displays and pins.</p>
+            </div></li>
+            <li><div>
+              <h3>Connect &amp; choose the port</h3>
+              <p>Click the button and pick the port called something like <em>USB-SERIAL CH340</em> or <em>USB Serial</em>. Nothing listed? You may need the <a href="guide.html#drivers">CH340 driver</a>.</p>
+            </div></li>
+            <li><div>
+              <h3>Install</h3>
+              <p>On a first install tick <strong>Erase device</strong> — it wipes old firmware and settings from the flash chip only. Your SD card is never touched.</p>
+            </div></li>
+            <li><div>
+              <h3>Done — it reboots</h3>
+              <p>Wait for the progress bar to finish (usually a minute or two). The board restarts into RetroCYD. Now <a href="#quick-start">set up the SD card</a>.</p>
+            </div></li>
+          </ol>
+          <p class="small muted" style="margin-top:1.4rem">“Failed to connect”? Hold <kbd>BOOT</kbd> while you click Connect, release once it starts. More fixes in <a href="guide.html#troubleshooting">Troubleshooting</a>.</p>
+        </div>
+
+        <div class="flasher" id="flasher">
+          <div class="flasher-title">
+            <h3>RETROCYD INSTALLER</h3>
+            <span class="led" id="fw-led" role="status">Checking firmware…</span>
+          </div>
+
+          <div class="notice notice-warn" id="serial-support" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 21h20z"/><path d="M12 10v5M12 18h.01"/></svg>
+            <div>
+              <strong>This browser can't flash the board</strong>
+              <p id="serial-msg">Flashing needs desktop Chrome, Edge or Opera.</p>
+              <p class="small">Prefer the command line? Download the .bin below and use <a href="guide.html#manual-flash">esptool</a>.</p>
+            </div>
+          </div>
+
+          <fieldset class="board-picker">
+            <legend>1. Choose your board</legend>
+            <div class="board-options">
+              <label class="board-option">
+                <input type="radio" name="board" value="cyd40" checked>
+                <span class="opt">
+                  <span class="radio" aria-hidden="true"></span>
+                  <span class="name">4.0″ ESP32-32E — E32R40T / E32N40T</span>
+                  <span class="badge badge-primary">Primary</span>
+                  <span class="spec">LCDwiki · ST7796S 320×480 · resistive touch (R) or no touch (N)</span>
+                  <span class="avail" data-avail="cyd40">checking…</span>
+                </span>
+              </label>
+            </div>
+          </fieldset>
+
+          <dl class="build-info" aria-label="Latest published build">
+            <div><dt>Version</dt><dd id="fw-version">…</dd></div>
+            <div><dt>Built</dt><dd id="fw-date">…</dd></div>
+            <div><dt>Commit</dt><dd id="fw-commit">…</dd></div>
+          </dl>
+
+          <div class="install-area">
+            <esp-web-install-button id="install-btn" hidden>
+              <button slot="activate" class="btn" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
+                2. Connect &amp; install
+              </button>
+              <span slot="unsupported">Your browser can't flash ESP boards. Use desktop Chrome, Edge or Opera.</span>
+              <span slot="not-allowed">Flashing only works on HTTPS pages or localhost.</span>
+            </esp-web-install-button>
+            <button class="btn" id="install-placeholder" type="button" disabled>Checking firmware…</button>
+            <p class="install-status" id="install-status" aria-live="polite">
+              <noscript>JavaScript is required for the web installer. You can still flash manually with <a href="guide.html#manual-flash">esptool</a>.</noscript>
+            </p>
+            <div class="dl-row" id="dl-row" hidden>
+              <a id="dl-bin" href="#flash">⬇ Download merged .bin</a>
+              <a id="dl-manifest" href="#flash" class="small">manifest.json</a>
+              <span class="small muted">flash at offset 0x0</span>
+            </div>
+          </div>
+
+          <p class="safe-line">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg>
+            <span>Writes the SPI flash chip only. No eFuses, no secure boot, no flash encryption. Always recoverable — <a href="#safety">here's why</a>.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ QUICK START -->
+  <section class="section" id="quick-start" aria-labelledby="qs-title">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">After flashing</p>
+        <h2 id="qs-title">From flashed to <span class="accent">playing</span></h2>
+        <p>Four steps. The full details are in the <a href="guide.html#sd-card">guide</a>.</p>
+      </div>
+      <ol class="steps steps-cards">
+        <li><div>
+          <h3>Format a microSD</h3>
+          <p>FAT32. Cards up to 32 GB work out of the box; bigger cards must be reformatted to FAT32.</p>
+        </div></li>
+        <li><div>
+          <h3>Boot once with it</h3>
+          <p>RetroCYD creates <code>/roms/nes</code>, <code>/roms/gb</code>, <code>/roms/gbc</code>, <code>/roms/chip8</code> and <code>/saves</code> for you.</p>
+        </div></li>
+        <li><div>
+          <h3>Add free games</h3>
+          <p>Drop homebrew ROMs (or ZIPs) into the right folder. Not sure where to get them legally? <a href="games.html">We made a list.</a></p>
+        </div></li>
+        <li><div>
+          <h3>Play</h3>
+          <p>Tap a system tile, pick a game. <kbd>BOOT</kbd>, on-screen MENU or <kbd>HOME</kbd> opens the in-game menu.</p>
+        </div></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================================================ SYSTEMS -->
+  <section class="section band" id="systems" aria-labelledby="systems-title">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Compatibility</p>
+        <h2 id="systems-title">What runs — and what <span class="accent">can't</span></h2>
+      </div>
+      <div class="grid grid-4" style="margin-bottom:2.2rem">
+        <article class="card sys ok">
+          <span class="sys-name" style="color:#ffc2de">NES</span>
+          <p>Nintendo Entertainment System / Famicom. Full speed with automatic frame-skip. Mappers 0–4, 7, 9–11, 66 and 71 (NROM, MMC1, UxROM, CNROM, MMC3, AxROM, MMC2/4 and more).</p>
+          <span class="ext">/roms/nes · .nes .zip</span>
+        </article>
+        <article class="card sys ok">
+          <span class="sys-name" style="color:#c8ffd9">Game Boy</span>
+          <p>The original monochrome handheld, with selectable palettes.</p>
+          <span class="ext">/roms/gb · .gb .gbc .zip</span>
+        </article>
+        <article class="card sys ok">
+          <span class="sys-name" style="color:#c9fbff">Game Boy Color</span>
+          <p>Colour games and dual-mode cartridges.</p>
+          <span class="ext">/roms/gbc · .gbc .gb .zip</span>
+        </article>
+        <article class="card sys ok">
+          <span class="sys-name" style="color:#fff0bf">CHIP-8</span>
+          <p>CHIP-8 and SUPER-CHIP programs. Runs trivially fast.</p>
+          <span class="ext">/roms/chip8 · .ch8 .c8 .sc8 .zip</span>
+        </article>
+      </div>
+
+      <h3>Not possible on this hardware</h3>
+      <p class="muted">The board has one ESP32 (dual-core Xtensa LX6, 240 MHz) with 520 KB of internal RAM, <strong>no PSRAM</strong>, 4 MB of flash, and a display that is fed pixel-by-pixel over SPI. That's plenty for 8-bit machines and nowhere near enough for these:</p>
+      <ul class="why-list">
+        <li><b>SNES</b><span>Three processors to emulate at once (65816 CPU, picture processor, SPC700 sound) — far too much work for full speed — and many ROMs are bigger than the 2 MB cache.</span></li>
+        <li><b>GBA</b><span>A 32-bit ARM with ~384 KB of RAM/VRAM to emulate, and ROMs up to 32 MB — far past the 2 MB cache and the RAM budget.</span></li>
+        <li><b>Genesis / Mega Drive</b><span>A 68000 plus a Z80 and a demanding video chip is too much for one ESP32 without PSRAM, and the larger ROMs (up to 4 MB) exceed the cache.</span></li>
+        <li><b>N64 · PS1</b><span>3D consoles with megabytes of RAM and CD- or cartridge-sized data. Orders of magnitude beyond a microcontroller.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============================================================ HONESTY -->
+  <section class="section" id="honesty" aria-labelledby="honesty-title">
+    <div class="container">
+      <div class="honesty">
+        <p class="eyebrow">Honesty box</p>
+        <h2 id="honesty-title">“Is this actually possible?”</h2>
+        <p class="lead">Yes — with realistic expectations. Here's how it feels in practice.</p>
+
+        <div class="grid grid-2" style="gap:2rem; margin-top:1.6rem">
+          <div>
+            <div class="meter">
+              <div class="meter-top"><span>NES — game speed</span><span>full 60 Hz</span></div>
+              <div class="meter-bar"><i style="width:100%"></i></div>
+              <p class="meter-note">Emulation runs at full speed; the display uses automatic frame-skip.</p>
+            </div>
+            <div class="meter y">
+              <div class="meter-top"><span>NES / Game Boy — displayed frames</span><span>~30–60 fps</span></div>
+              <div class="meter-bar"><i style="width:75%"></i></div>
+              <p class="meter-note">Depends on screen scale and the “fast display” setting.</p>
+            </div>
+            <div class="meter">
+              <div class="meter-top"><span>Game Boy / Color — game speed</span><span>full speed</span></div>
+              <div class="meter-bar"><i style="width:100%"></i></div>
+            </div>
+            <div class="meter">
+              <div class="meter-top"><span>CHIP-8 / SUPER-CHIP</span><span>trivially fast</span></div>
+              <div class="meter-bar"><i style="width:100%"></i></div>
+            </div>
+            <ul class="small muted" style="margin-top:1.2rem">
+              <li><strong>Touch:</strong> the E32R40T panel is resistive and single-touch — fine for menus, puzzle and turn-based games. For platformers and shooters, plug in a <a href="guide.html#controller">wired controller</a>.</li>
+              <li><strong>ROM size:</strong> max 2 MB (+64 KB). Typical homebrew is far smaller; the few 4 MB and 8 MB Game Boy Color titles won't fit.</li>
+              <li><strong>Game switching:</strong> a couple of seconds to copy a new ROM into flash; relaunching the same game is instant.</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3>Why frame-skip? Back-of-the-envelope SPI math</h3>
+            <p class="muted small">Every pixel travels to the ST7796S as 16 bits over SPI. Raw transfer ceilings (before any emulation work):</p>
+            <div class="math" tabindex="0" role="region" aria-label="SPI bandwidth table">
+              <table>
+                <thead><tr><th scope="col">Picture</th><th scope="col">Pixels</th><th scope="col">40 MHz</th><th scope="col">80 MHz*</th></tr></thead>
+                <tbody>
+                  <tr><td>Game Boy 160×144</td><td>23,040</td><td>≈108 fps</td><td>≈217 fps</td></tr>
+                  <tr><td>Game Boy ×2 → 320×288</td><td>92,160</td><td>≈27 fps</td><td>≈54 fps</td></tr>
+                  <tr><td>NES 256×240</td><td>61,440</td><td>≈41 fps</td><td>≈81 fps</td></tr>
+                  <tr><td>Full screen 480×320</td><td>153,600</td><td>≈16 fps</td><td>≈33 fps</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="small muted" style="margin-top:.8rem">* “Fast display” in Settings overclocks the display SPI from 40 to 80 MHz. Most panels handle it; if you see glitches, switch it off. The emulated game always runs at its real speed — only the number of frames <em>shown</em> changes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ SAFETY -->
+  <section class="section-tight" id="safety" aria-labelledby="safety-title">
+    <div class="container">
+      <div class="safety">
+        <p class="eyebrow" style="color:var(--green)">Hard rule</p>
+        <h2 id="safety-title">We never burn fuses.</h2>
+        <p class="lead">The ESP32 has one-time-programmable <strong>eFuses</strong> for things like secure boot and flash encryption. Burning them is permanent. RetroCYD never goes near them — not the web flasher, not the CI build, not the firmware.</p>
+        <div class="vs">
+          <div class="yes">
+            <h3><span class="badge badge-primary">Safe</span> “Erase device”</h3>
+            <p class="muted">Wipes the 4 MB SPI <em>flash chip</em>: old firmware, RetroCYD settings and the ROM cache. Your games and saves on the SD card are untouched. 100% reversible — just flash again.</p>
+          </div>
+          <div class="never">
+            <h3><span class="badge badge-no">Never</span> Burning eFuses</h3>
+            <p class="muted">Permanent changes inside the ESP32 chip itself. Secure boot and flash encryption are <strong>disabled</strong> in our build and nothing is ever run through <code>espefuse</code>.</p>
+          </div>
+        </div>
+        <p class="muted" style="margin:0">Flashing manually? Only ever use <code>esptool.py --chip esp32 write_flash 0x0 retrocyd-cyd40-merged.bin</code>. Full details, recovery steps and the list of commands to avoid are in the <a href="guide.html#safety">guide</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ ROADMAP -->
+  <section class="section" id="roadmap" aria-labelledby="roadmap-title">
+    <div class="container">
+      <div class="grid grid-2" style="gap:clamp(1.5rem,4vw,3rem); align-items:start">
+        <div>
+          <p class="eyebrow">Next up</p>
+          <h2 id="roadmap-title">Roadmap</h2>
+          <p class="muted">Ideas we're working towards. None of these are in the firmware yet — no promises on dates.</p>
+          <ul class="roadmap">
+            <li><span class="badge badge-info">Planned</span><div><strong>Bluetooth gamepads</strong><span>Wireless controllers, so you don't need the I2C adapter.</span></div></li>
+            <li><span class="badge badge-info">Planned</span><div><strong>Sega Master System / Game Gear</strong><span>Two more 8-bit systems that suit this hardware.</span></div></li>
+            <li><span class="badge badge-info">Planned</span><div><strong>More NES mappers</strong><span>Support for more of the less common cartridge boards.</span></div></li>
+          </ul>
+        </div>
+        <div>
+          <p class="eyebrow">Keep reading</p>
+          <h2>Go deeper</h2>
+          <div class="grid cta-grid" style="gap:1rem">
+            <a class="card bracket" href="guide.html">
+              <h3>The full guide</h3>
+              <p>Hardware, SD card, controls, wiring a controller, settings, pinout, troubleshooting, FAQ and building from source.</p>
+              <span class="go">OPEN GUIDE →</span>
+            </a>
+            <a class="card bracket" href="games.html">
+              <h3>Free &amp; legal games</h3>
+              <p>Hand-picked homebrew archives, game jams and how to back up your own cartridges.</p>
+              <span class="go">FIND GAMES →</span>
+            </a>
+            <a class="card bracket" href="https://github.com/PierreGode/Retro-CYD/issues">
+              <h3>Ideas &amp; bug reports</h3>
+              <p>Found a problem or want a feature? Open an issue on GitHub.</p>
+              <span class="go">OPEN AN ISSUE →</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="index.html" aria-label="RetroCYD home">
+          <svg viewBox="0 0 32 32" aria-hidden="true" shape-rendering="crispEdges"><rect x="1" y="5" width="30" height="22" rx="3" fill="#ffd23f"/><rect x="4" y="8" width="24" height="16" fill="#0a0e1d"/><rect x="7" y="15" width="7" height="2" fill="#3ef0ff"/><rect x="9.5" y="12.5" width="2" height="7" fill="#3ef0ff"/><rect x="19" y="16" width="3" height="3" fill="#ff5fa8"/><rect x="23" y="13" width="3" height="3" fill="#ff5fa8"/></svg>
+          <span>RETRO<b>CYD</b></span>
+        </a>
+        <p style="margin-top:1rem">Free retro game firmware for the 4.0″ ESP32 “Cheap Yellow Display”.</p>
+      </div>
+      <div>
+        <h2>Site</h2>
+        <ul>
+          <li><a href="index.html#flash">Web flasher</a></li>
+          <li><a href="guide.html">Guide</a></li>
+          <li><a href="games.html">Free &amp; legal games</a></li>
+          <li><a href="guide.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Project</h2>
+        <ul>
+          <li><a href="https://github.com/PierreGode/Retro-CYD">GitHub</a></li>
+          <li><a href="https://github.com/PierreGode/Retro-CYD/issues">Report an issue</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="disclaimer">
+      <p>RetroCYD is an independent hobby project. It is not affiliated with, endorsed or sponsored by Nintendo, Sega, Sony or any other console maker, nor by LCDwiki, Sunton or Espressif. All trademarks belong to their respective owners; system names are used only to describe compatibility.</p>
+      <p>RetroCYD ships with no games. Please only play homebrew, public-domain or freely licensed software, or backups of games you own where your local law allows it.</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
