@@ -414,6 +414,7 @@
           <dt>Volume</dt><dd>Master sound volume.</dd>
           <dt>Brightness</dt><dd>Backlight level.</dd>
           <dt>Fast display</dt><dd>Runs the display SPI bus at 80 MHz instead of the default 40 MHz — roughly double the pixel bandwidth, so more frames are shown. Many panels handle it; if you see glitches or noise, turn it off. If the picture is too garbled to find the setting: press RESET, then straight away press and hold BOOT for about 3 seconds. RetroCYD switches Fast display off and restarts.</dd>
+          <dt>Smooth motion</dt><dd>On by default. When most of the picture changes at once (scrolling), only every other line of the screen is updated per frame, the other half on the next frame, so twice as many frames reach the display. Still pictures are always drawn in full. Turn it off if you prefer every frame complete, at a lower frame rate while scrolling.</dd>
           <dt>Show FPS</dt><dd>Performance overlay in the top-right corner: <b>Game</b> = frames emulated per second (60 is full speed), <b>LCD</b> = frames per second that reach the screen, <b>CPU</b> = how busy the emulator core is.</dd>
           <dt>Touch calibration</dt><dd>Tap the targets to line up touch with the display. Run it if taps land off-target.</dd>
           <dt>DMG palette</dt><dd>Choose the colours used for original (monochrome) Game Boy games.</dd>
@@ -569,7 +570,7 @@
           </div>
           <div>
             <h3>Choppy picture</h3>
-            <p>Turn on <strong>Fast display</strong> in Settings and/or choose a smaller <strong>Screen scale</strong> in the in-game menu. That raises the <b>LCD</b> number in the Show FPS overlay; game speed itself is unaffected.</p>
+            <p>The display link sends at most about 5 MB per second, and a scrolling Game Boy picture at 2x is 180 KB per frame. Keep <strong>Smooth motion</strong> on, turn on <strong>Fast display</strong> in Settings (double the bandwidth, on panels that take it) and/or choose a smaller <strong>Screen scale</strong> in the in-game menu (Game Boy “Fit screen” or 1x, NES “1x sharp”). That raises the <b>LCD</b> number in the Show FPS overlay; game speed itself is unaffected.</p>
           </div>
           <div>
             <h3>Game runs slowly</h3>

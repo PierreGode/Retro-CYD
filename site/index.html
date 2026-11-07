@@ -501,6 +501,7 @@
               </table>
             </div>
             <p class="small muted" style="margin-top:.8rem">* “Fast display” in Settings overclocks the display SPI from 40 to 80 MHz. Many panels handle it; if you see glitches, switch it off. As long as the CPU keeps up, the game itself runs at its real speed and only the number of frames <em>shown</em> changes.</p>
+            <p class="small muted">These are worst cases with every pixel changing. RetroCYD only sends the rows that changed, starts sending while the frame is still being emulated, and while the picture scrolls updates every other line per frame (Settings › Smooth motion), which halves the data.</p>
           </div>
         </div>
       </div>
