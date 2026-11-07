@@ -462,9 +462,9 @@
         <div class="grid grid-2" style="gap:2rem; margin-top:1.6rem">
           <div>
             <div class="meter">
-              <div class="meter-top"><span>NES — game speed</span><span>full 60 Hz</span></div>
+              <div class="meter-top"><span>NES — game speed</span><span>target 60 Hz</span></div>
               <div class="meter-bar"><i style="width:100%"></i></div>
-              <p class="meter-note">Emulation runs at full speed; the display uses automatic frame-skip.</p>
+              <p class="meter-note">The emulator aims for full speed and skips displayed frames, not game frames. Settings › Show FPS shows the real game speed and CPU load on your board.</p>
             </div>
             <div class="meter y">
               <div class="meter-top"><span>NES / Game Boy — displayed frames</span><span>~30–60 fps</span></div>
@@ -472,7 +472,7 @@
               <p class="meter-note">Depends on screen scale and the “fast display” setting.</p>
             </div>
             <div class="meter">
-              <div class="meter-top"><span>Game Boy / Color — game speed</span><span>full speed</span></div>
+              <div class="meter-top"><span>Game Boy / Color — game speed</span><span>target 60 Hz</span></div>
               <div class="meter-bar"><i style="width:100%"></i></div>
             </div>
             <div class="meter">
@@ -500,7 +500,7 @@
                 </tbody>
               </table>
             </div>
-            <p class="small muted" style="margin-top:.8rem">* “Fast display” in Settings overclocks the display SPI from 40 to 80 MHz. Most panels handle it; if you see glitches, switch it off. The emulated game always runs at its real speed — only the number of frames <em>shown</em> changes.</p>
+            <p class="small muted" style="margin-top:.8rem">* “Fast display” in Settings overclocks the display SPI from 40 to 80 MHz. Many panels handle it; if you see glitches, switch it off. As long as the CPU keeps up, the game itself runs at its real speed and only the number of frames <em>shown</em> changes.</p>
           </div>
         </div>
       </div>
