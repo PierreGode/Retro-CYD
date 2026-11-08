@@ -1,7 +1,7 @@
 version=1.0.0
-build=21
+build=22
 layout=2
 size=1492224
-sha256=b5d5b53d2c28cf9fc8ef5b09e679a4d6db57bbbbbe813e69bc55a3eb45c7cdb3
+sha256=0132640af1a502bf0cf8efc5469f947f56ee807e7a9fbda231ee2ef05e879f62
 file=firmware.bin
-date=2026-11-08T20:12:39Z
+date=2026-11-08T20:45:35Z
