@@ -462,8 +462,76 @@
     });
   }
 
+  /* ------------------------------------- Bluetooth bridge (2nd ESP32) */
+  function initBridgeFlasher() {
+    var root = $("#bridge-flasher");
+    if (!root) return;
+    var espBtn = $("#br-install-btn", root);
+    var placeholder = $("#br-install-placeholder", root);
+    var statusEl = $("#br-install-status", root);
+    var dlRow = $("#br-dl-row", root);
+    var led = $("#br-led", root);
+    var manifestUrl = FW_BASE + "bridge/manifest.json";
+
+    var hasSerial = typeof navigator !== "undefined" && "serial" in navigator;
+    var secure = !!window.isSecureContext;
+    var state = "checking";  // checking | ok | none
+    var component = "loading";  // loading | ok | failed
+
+    function render() {
+      var ready = state === "ok";
+      if (led) {
+        led.setAttribute("data-state", state === "checking" ? "" : ready ? "ok" : "warn");
+        led.textContent = state === "checking" ? "Checking firmware…" : ready ? "Firmware online" : "Not published yet";
+      }
+      if (dlRow) dlRow.hidden = !ready;
+      var showEsp = ready && hasSerial && secure && component === "ok";
+      if (espBtn) {
+        if (ready) espBtn.setAttribute("manifest", new URL(manifestUrl, location.href).href);
+        espBtn.hidden = !showEsp;
+      }
+      if (placeholder) {
+        placeholder.hidden = showEsp;
+        placeholder.textContent =
+          state === "checking" ? "Checking firmware…" :
+          !ready ? "Not published yet" :
+          !hasSerial ? "Needs desktop Chrome / Edge" :
+          !secure ? "Needs HTTPS" :
+          component === "failed" ? "Flasher failed to load" : "Loading flasher…";
+      }
+      if (statusEl) {
+        statusEl.textContent =
+          state === "checking" ? "Looking for the bridge firmware…" :
+          !ready ? "The bridge firmware isn't on the site yet. Please check back in a few minutes." :
+          !hasSerial ? "This browser can't flash. Open the page in desktop Chrome, Edge or Opera, or download the .bin and use esptool." :
+          component === "failed" ? "The flasher component couldn't be loaded from unpkg.com. Reload the page, or download the .bin and use esptool." :
+          "Plug in the bridge board (not the CYD), click the button and pick its serial port. Choose Erase device when asked.";
+      }
+    }
+
+    if (window.customElements && customElements.whenDefined) {
+      var timer = setTimeout(function () { if (component !== "ok") { component = "failed"; render(); } }, 12000);
+      customElements.whenDefined("esp-web-install-button").then(function () {
+        component = "ok"; clearTimeout(timer); render();
+      });
+    } else {
+      component = "failed";
+    }
+
+    render();
+    fetchJSON(manifestUrl).then(function (m) {
+      var part = m && m.builds && m.builds[0] && m.builds[0].parts && m.builds[0].parts[0];
+      if (!part || typeof part.path !== "string") throw new Error("manifest has no parts");
+      return headOK(new URL(part.path, new URL(manifestUrl, location.href)).href);
+    }).then(function (ok) {
+      state = ok ? "ok" : "none";
+    }, function () {
+      state = "none";
+    }).then(render);
+  }
+
   function start() {
-    var steps = [initNav, initCopy, initToc, initFilter, initFlasher, initCatalog];
+    var steps = [initNav, initCopy, initToc, initFilter, initFlasher, initBridgeFlasher, initCatalog];
     steps.forEach(function (fn) {
       try { fn(); } catch (e) { if (window.console) console.error("[retrocyd]", fn.name, e); }
     });

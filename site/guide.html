@@ -88,6 +88,7 @@
               <tr><th scope="row">Small speaker</th><td><span class="badge badge-info">Recommended</span></td><td>8 Ω 1.5 W or 4 Ω 2 W with a 1.25 mm 2-pin plug (often listed as “JST 1.25” or “MX1.25”).</td></tr>
               <tr><th scope="row">Wii extension breakout adapter</th><td><span class="badge badge-muted">Optional</span></td><td>Small PCB the controller plugs into; exposes <code>+ − d c</code> pads. Needed for a wired controller.</td></tr>
               <tr><th scope="row">Classic-style controller</th><td><span class="badge badge-muted">Optional</span></td><td>Wii Classic Controller, Classic Controller Pro, or the NES / SNES Classic Mini controller.</td></tr>
+              <tr><th scope="row">ESP32-WROOM-32 dev board</th><td><span class="badge badge-muted">Optional</span></td><td>Bluetooth bridge for PS5, PS4, Xbox, Switch Pro and 8BitDo controllers (“ESP32 DevKit”, “NodeMCU-32S”). Not an ESP32-S3 or C3. See <a href="#bluetooth">Bluetooth controller</a>.</td></tr>
               <tr><th scope="row">4-pin 1.25 mm cable</th><td><span class="badge badge-muted">Optional</span></td><td>To connect the board's I2C header to the breakout. Some boards ship with one.</td></tr>
               <tr><th scope="row">3.7 V LiPo battery</th><td><span class="badge badge-muted">Optional</span></td><td>Single-cell LiPo with a 1.25 mm 2-pin plug. <strong>Check polarity before plugging in</strong> — these plugs are not wired the same way by every seller.</td></tr>
             </tbody>
@@ -372,7 +373,127 @@
           </table>
         </div>
         <p>In game the D-pad, A, B, SELECT (−) and START (+) do what you'd expect. <strong>HOME</strong> opens the in-game menu; on controllers without HOME (NES / SNES Classic Mini) press <strong>SELECT + START</strong>.</p>
-        <p class="muted"><strong>Bluetooth gamepads</strong> aren't supported yet — they're on the <a href="index.html#roadmap">roadmap</a>.</p>
+
+        <h3 id="bluetooth">Bluetooth controller (with a bridge board)</h3>
+        <p>While a game runs, the CYD has no RAM to spare for Bluetooth. Bluetooth controllers therefore connect through a second ESP32 board, the <strong>bridge</strong>. It runs <a href="https://github.com/darthcloud/BlueRetro">BlueRetro</a>, free open-source firmware by Jacques Gagnon. The bridge receives the controller over Bluetooth and answers on the I2C header like a Wii Classic Controller Pro, so to the CYD it is just another wired controller.</p>
+        <ul>
+          <li><strong>Bridge board:</strong> any <strong>ESP32-WROOM-32</strong> dev board (“ESP32 DevKit”, “NodeMCU-32S”, CH340 or CP2102, USB-C or micro-USB). ESP32-S2, S3, C3 and C6 boards won't work: they lack the Classic Bluetooth that PlayStation and Switch controllers use.</li>
+          <li><strong>Wires:</strong> four jumper wires, plus 4-pin 1.25 mm cables for the CYD's serial and I2C headers, or soldered wires.</li>
+          <li><strong>Controller:</strong> PS5 DualSense, PS4 DualShock 4, Xbox Wireless (One S and later), Switch Pro, 8BitDo and <a href="https://github.com/darthcloud/BlueRetro/wiki/Controller-pairing-guide">many more</a>.</li>
+        </ul>
+
+        <h4>1. Flash the bridge</h4>
+        <p>Use the <a href="index.html#bluetooth">bridge installer</a> on the flash page and tick <strong>Erase device</strong>. Connect the <strong>bridge board</strong>, not the CYD: the installer can't tell two ESP32 boards apart. If you install the bridge firmware onto the CYD by mistake, just flash RetroCYD again. To flash manually instead, download the merged image and run <code>esptool.py --chip esp32 write_flash 0x0 blueretro-wii-extension-merged.bin</code>. The bridge firmware is BlueRetro's unmodified v25.04 “Wii extension” release.</p>
+
+        <h4>2. Wire it to the CYD</h4>
+        <p>Unplug both boards first.</p>
+        <figure class="figure">
+          <svg class="diagram" viewBox="0 0 760 360" role="img" aria-labelledby="bridge-wire-t bridge-wire-d">
+            <title id="bridge-wire-t">Wiring the Bluetooth bridge to the CYD</title>
+            <desc id="bridge-wire-d">Four wires connect an ESP32 dev board to the CYD. The bridge's VIN (5 volt) pin goes to the 5V pin of the CYD's serial header. The bridge's GND goes to GND on the CYD's I2C header, IO26 goes to SDA (IO32) and IO25 goes to SCL (IO25). The 3V3 pin of the I2C header and the serial header's GND, TX and RX pins stay unconnected.</desc>
+            <rect x="10" y="20" width="250" height="320" rx="12" fill="#141a33" stroke="#ff5fa8" stroke-width="2"/>
+            <text class="pxl" x="135" y="48" font-size="9" fill="#ff5fa8" text-anchor="middle">BLUETOOTH BRIDGE</text>
+            <text x="135" y="68" font-size="13" fill="#a9b1d6" text-anchor="middle">ESP32 dev board (WROOM-32)</text>
+            <rect x="30" y="92" width="86" height="174" rx="6" fill="#0d1126" stroke="#2a3366" stroke-width="2"/>
+            <path d="M42 104 h10 v10 h10 v-10 h10 v10 h10 v-10 h10 v10 h10" fill="none" stroke="#3b4580" stroke-width="2"/>
+            <text class="pxl" x="73" y="176" font-size="9" fill="#a9b1d6" text-anchor="middle">ESP32</text>
+            <text x="73" y="196" font-size="11" fill="#6f78a8" text-anchor="middle">WROOM-32</text>
+            <rect x="103" y="306" width="64" height="22" rx="9" fill="#2a3366" stroke="#3b4580"/>
+            <text x="135" y="298" font-size="12" fill="#6f78a8" text-anchor="middle">USB-C · only for flashing</text>
+
+            <rect x="500" y="20" width="250" height="320" rx="12" fill="#141a33" stroke="#ffd23f" stroke-width="2"/>
+            <text class="pxl" x="625" y="48" font-size="9" fill="#ffd23f" text-anchor="middle">CYD 4.0″</text>
+            <text x="625" y="68" font-size="13" fill="#a9b1d6" text-anchor="middle">4-pin headers on the back</text>
+            <text class="pxl" x="544" y="90" font-size="7" fill="#6f78a8">SERIAL</text>
+            <text class="pxl" x="544" y="216" font-size="7" fill="#6f78a8">I2C</text>
+
+            <g stroke-width="5" fill="none" stroke-linecap="round">
+              <path d="M236 108 C 380 108, 380 108, 524 108" stroke="#ff6b6b"/>
+              <path d="M236 158 C 380 158, 380 262, 524 262" stroke="#8f99c9"/>
+              <path d="M236 208 C 380 208, 380 290, 524 290" stroke="#3ef0ff"/>
+              <path d="M236 258 C 380 258, 380 318, 524 318" stroke="#ffd23f"/>
+            </g>
+            <g fill="#c9a227" stroke="#5b4500">
+              <rect x="228" y="100" width="16" height="16" rx="2"/><rect x="228" y="150" width="16" height="16" rx="2"/><rect x="228" y="200" width="16" height="16" rx="2"/><rect x="228" y="250" width="16" height="16" rx="2"/>
+              <rect x="516" y="100" width="16" height="16" rx="2"/><rect x="516" y="254" width="16" height="16" rx="2"/><rect x="516" y="282" width="16" height="16" rx="2"/><rect x="516" y="310" width="16" height="16" rx="2"/>
+            </g>
+            <g fill="#3a4170" stroke="#262c52">
+              <rect x="516" y="124" width="16" height="16" rx="2"/><rect x="516" y="148" width="16" height="16" rx="2"/><rect x="516" y="172" width="16" height="16" rx="2"/>
+              <rect x="516" y="226" width="16" height="16" rx="2"/>
+            </g>
+            <g font-size="15" font-weight="700" fill="#e8ebff" text-anchor="end">
+              <text x="220" y="114">VIN / 5V</text><text x="220" y="164">GND</text><text x="220" y="214">IO26</text><text x="220" y="264">IO25</text>
+            </g>
+            <g font-size="15" font-weight="700" fill="#e8ebff">
+              <text x="544" y="114">5V</text>
+              <text x="544" y="268">GND</text><text x="544" y="296">SDA · IO32</text><text x="544" y="324">SCL · IO25</text>
+            </g>
+            <g font-size="13" fill="#5f6796">
+              <text x="544" y="137">GND · not used</text><text x="544" y="161">TX · not used</text><text x="544" y="185">RX · not used</text>
+              <text x="544" y="239">3V3</text>
+            </g>
+            <text x="574" y="239" font-size="13" font-weight="700" fill="#ff6b6b">leave free</text>
+            <text class="pxl" x="380" y="96" font-size="8" fill="#ff6b6b" text-anchor="middle">5 V FROM USB</text>
+            <text class="pxl" x="380" y="350" font-size="7" fill="#6f78a8" text-anchor="middle">3.3 V SIGNALS ON BOTH BOARDS</text>
+          </svg>
+          <figcaption>Connect by <strong>label</strong>, not by position. Bridge boards mark the pins <code>D25</code>, <code>G25</code>, <code>IO25</code> or just <code>25</code>. <code>VIN</code> may be marked <code>5V</code>.</figcaption>
+        </figure>
+        <div class="table-wrap">
+          <table class="data">
+            <caption>Bridge connections</caption>
+            <thead><tr><th scope="col">Bridge pin</th><th scope="col">CYD pin</th><th scope="col">CYD header</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">VIN (5V)</th><td><code>5V</code></td><td>Serial header (4-pin, the one with TX and RX)</td></tr>
+              <tr><th scope="row">GND</th><td><code>GND</code></td><td>I2C header</td></tr>
+              <tr><th scope="row">IO26</th><td><code>SDA</code> (IO32)</td><td>I2C header</td></tr>
+              <tr><th scope="row">IO25</th><td><code>SCL</code> (IO25)</td><td>I2C header</td></tr>
+              <tr><th scope="row">—</th><td><code>3V3</code></td><td>I2C header: <strong>leave free</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>Power.</strong> The serial header's 5V pin carries the power of the CYD's USB-C port. The bridge adds roughly 100–150 mA, so use a USB power supply that delivers at least 1 A. Not sure which pin is 5V? With the CYD on USB, a multimeter shows about 5 V between 5V and GND. Don't take power from the I2C header's 3V3 pin. The CYD's 3.3 V regulator is a small ME6217 that already powers the CYD and its 142 mA backlight, and the extra load could overheat it and reset the CYD.</p>
+        <p><strong>On battery,</strong> the serial header has no 5 V. Power the bridge from its own USB-C port with a power bank instead, and leave the 5V wire off. Always use one power source for the bridge, not both.</p>
+        <p>The bridge uses the same I2C address as a Wii controller, so you can't connect both at once.</p>
+
+        <h4>3. Pair the controller</h4>
+        <p>Switch the CYD on. Whenever no controller is connected, the bridge searches for one by itself; on most boards its blue LED blinks while it searches and stays on once a controller is connected. Then put the controller in pairing mode:</p>
+        <div class="table-wrap">
+          <table class="data">
+            <thead><tr><th scope="col">Controller</th><th scope="col">Pairing mode</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">PS5 DualSense · PS4 DualShock 4</th><td>Hold <kbd>Create</kbd> (PS4: <kbd>Share</kbd>) and <kbd>PS</kbd> until the light flashes quickly.</td></tr>
+              <tr><th scope="row">Xbox Wireless</th><td>Switch it on, then hold the pair button on top until the Xbox logo flashes quickly.</td></tr>
+              <tr><th scope="row">Switch Pro</th><td>Hold the sync button on top until the player lights run.</td></tr>
+              <tr><th scope="row">8BitDo</th><td>Most models need X-input mode (see the controller's manual), then hold its pair button.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>The bridge remembers the controller. Next time, just press <kbd>PS</kbd>, the Xbox button or <kbd>Home</kbd>. For other controllers, see BlueRetro's <a href="https://github.com/darthcloud/BlueRetro/wiki/Controller-pairing-guide">pairing guide</a>.</p>
+
+        <h4>4. Buttons</h4>
+        <p>The face buttons work by position, as on a SNES pad: the right button is A and the bottom button is B.</p>
+        <div class="table-wrap">
+          <table class="data">
+            <thead><tr><th scope="col">PlayStation</th><th scope="col">Xbox</th><th scope="col">Switch</th><th scope="col">RetroCYD</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">D-pad · left stick</th><td>D-pad · left stick</td><td>D-pad · left stick</td><td>D-pad</td></tr>
+              <tr><th scope="row">Circle · Triangle</th><td>B · Y</td><td>A · X</td><td>A</td></tr>
+              <tr><th scope="row">Cross · Square</th><td>A · X</td><td>B · Y</td><td>B</td></tr>
+              <tr><th scope="row">Options</th><td>Menu</td><td><kbd>+</kbd></td><td>START</td></tr>
+              <tr><th scope="row">Create / Share</th><td>View</td><td><kbd>−</kbd></td><td>SELECT</td></tr>
+              <tr><th scope="row">PS</th><td>Xbox button</td><td>Home</td><td>In-game menu</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="muted">To change the mapping, use BlueRetro's web configuration at <a href="https://blueretro.io">blueretro.io</a>. It runs in desktop or Android Chrome, connects to the bridge over Bluetooth, and only works while no controller is connected to the bridge.</p>
+
+        <h4>Good to know</h4>
+        <ul>
+          <li>The CYD shows <strong>PAD</strong> as soon as the bridge has power, even before a controller is paired. That's normal.</li>
+          <li>Leave <strong>Touch</strong> switched on in Settings. With the bridge connected the CYD always finds a controller, so touch doesn't come back on by itself at startup. If the controller's battery runs out, unplug the bridge and touch returns at the next start.</li>
+          <li>Bluetooth adds a few milliseconds of input delay, which you're unlikely to notice in 8-bit games.</li>
+          <li>BlueRetro is © Jacques Gagnon and licensed under the <a href="firmware/bridge/LICENSE-BlueRetro.txt">Apache License 2.0</a>. RetroCYD publishes the release unmodified and isn't affiliated with the BlueRetro project.</li>
+        </ul>
       </section>
 
       <!-- ===================================================== 7 MENU -->
@@ -479,6 +600,7 @@
               <tr><th scope="row">RGB LED</th><td>R <code>IO22</code> · G <code>IO16</code> · B <code>IO17</code></td><td>Active low</td></tr>
               <tr><th scope="row">Battery sense</th><td><code>IO34</code></td><td>ADC input</td></tr>
               <tr><th scope="row">I2C header</th><td>SCL <code>IO25</code> · SDA <code>IO32</code></td><td>Wired controller · 3.3 V</td></tr>
+              <tr><th scope="row">Serial header</th><td><code>5V</code> · <code>GND</code> · TX <code>IO1</code> · RX <code>IO3</code></td><td>5 V from USB-C (none on battery) · powers a <a href="#bluetooth">Bluetooth bridge</a></td></tr>
               <tr><th scope="row">Expansion (input-only)</th><td><code>IO35</code> · <code>IO39</code></td><td>No output, no pull-ups</td></tr>
               <tr><th scope="row">BOOT button</th><td><code>IO0</code></td><td>Menu in game · download mode at reset</td></tr>
               <tr><th scope="row">USB-C</th><td>UART0 via CH340-type USB-serial</td><td>Flashing &amp; power</td></tr>
@@ -665,7 +787,7 @@
           </details>
           <details>
             <summary>Are Bluetooth controllers supported?</summary>
-            <div class="a"><p>Not yet. They're on the <a href="index.html#roadmap">roadmap</a>. For now, use a Wii Classic or NES / SNES Classic Mini controller on the I2C header.</p></div>
+            <div class="a"><p>Yes, through a second ESP32 board that acts as a Bluetooth receiver: PS5, PS4, Xbox, Switch Pro, 8BitDo and more. See <a href="#bluetooth">Bluetooth controller</a>.</p></div>
           </details>
           <details>
             <summary>Does CHIP-8 support include XO-CHIP?</summary>

@@ -263,7 +263,7 @@
         <article class="card y">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="11" rx="5"/><path d="M7 10v5M4.5 12.5h5"/><circle cx="15.5" cy="11.5" r="1"/><circle cx="18" cy="14" r="1"/></svg></div>
           <h3>Touch or real buttons</h3>
-          <p>An on-screen gamepad for quick play, or plug in a Wii Classic Controller (Pro) or a NES / SNES Classic Mini controller via the I2C header. Hot-plug, auto-detected.</p>
+          <p>An on-screen gamepad for quick play, a Wii Classic Controller (Pro) or NES / SNES Classic Mini controller on the I2C header, or a PS5, Xbox or Switch pad through a <a href="#bluetooth">Bluetooth bridge board</a>. Hot-plug, auto-detected.</p>
         </article>
         <article class="card m">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg></div>
@@ -381,6 +381,149 @@
     </div>
   </section>
 
+  <!-- ============================================================ BLUETOOTH BRIDGE -->
+  <section class="section" id="bluetooth" aria-labelledby="bt-title">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Optional · Bluetooth</p>
+        <h2 id="bt-title">Play with a <span class="accent">PS5, Xbox or Switch</span> controller</h2>
+        <p>Add a second ESP32 board for a few euros as a Bluetooth receiver. It connects to your controller and passes the buttons to the CYD like a wired Wii Classic controller, so the CYD gives the games all its RAM as before.</p>
+      </div>
+
+      <figure class="figure">
+          <svg class="diagram" viewBox="0 0 760 360" role="img" aria-labelledby="bridge-wire-t bridge-wire-d">
+            <title id="bridge-wire-t">Wiring the Bluetooth bridge to the CYD</title>
+            <desc id="bridge-wire-d">Four wires connect an ESP32 dev board to the CYD. The bridge's VIN (5 volt) pin goes to the 5V pin of the CYD's serial header. The bridge's GND goes to GND on the CYD's I2C header, IO26 goes to SDA (IO32) and IO25 goes to SCL (IO25). The 3V3 pin of the I2C header and the serial header's GND, TX and RX pins stay unconnected.</desc>
+            <rect x="10" y="20" width="250" height="320" rx="12" fill="#141a33" stroke="#ff5fa8" stroke-width="2"/>
+            <text class="pxl" x="135" y="48" font-size="9" fill="#ff5fa8" text-anchor="middle">BLUETOOTH BRIDGE</text>
+            <text x="135" y="68" font-size="13" fill="#a9b1d6" text-anchor="middle">ESP32 dev board (WROOM-32)</text>
+            <rect x="30" y="92" width="86" height="174" rx="6" fill="#0d1126" stroke="#2a3366" stroke-width="2"/>
+            <path d="M42 104 h10 v10 h10 v-10 h10 v10 h10 v-10 h10 v10 h10" fill="none" stroke="#3b4580" stroke-width="2"/>
+            <text class="pxl" x="73" y="176" font-size="9" fill="#a9b1d6" text-anchor="middle">ESP32</text>
+            <text x="73" y="196" font-size="11" fill="#6f78a8" text-anchor="middle">WROOM-32</text>
+            <rect x="103" y="306" width="64" height="22" rx="9" fill="#2a3366" stroke="#3b4580"/>
+            <text x="135" y="298" font-size="12" fill="#6f78a8" text-anchor="middle">USB-C · only for flashing</text>
+
+            <rect x="500" y="20" width="250" height="320" rx="12" fill="#141a33" stroke="#ffd23f" stroke-width="2"/>
+            <text class="pxl" x="625" y="48" font-size="9" fill="#ffd23f" text-anchor="middle">CYD 4.0″</text>
+            <text x="625" y="68" font-size="13" fill="#a9b1d6" text-anchor="middle">4-pin headers on the back</text>
+            <text class="pxl" x="544" y="90" font-size="7" fill="#6f78a8">SERIAL</text>
+            <text class="pxl" x="544" y="216" font-size="7" fill="#6f78a8">I2C</text>
+
+            <g stroke-width="5" fill="none" stroke-linecap="round">
+              <path d="M236 108 C 380 108, 380 108, 524 108" stroke="#ff6b6b"/>
+              <path d="M236 158 C 380 158, 380 262, 524 262" stroke="#8f99c9"/>
+              <path d="M236 208 C 380 208, 380 290, 524 290" stroke="#3ef0ff"/>
+              <path d="M236 258 C 380 258, 380 318, 524 318" stroke="#ffd23f"/>
+            </g>
+            <g fill="#c9a227" stroke="#5b4500">
+              <rect x="228" y="100" width="16" height="16" rx="2"/><rect x="228" y="150" width="16" height="16" rx="2"/><rect x="228" y="200" width="16" height="16" rx="2"/><rect x="228" y="250" width="16" height="16" rx="2"/>
+              <rect x="516" y="100" width="16" height="16" rx="2"/><rect x="516" y="254" width="16" height="16" rx="2"/><rect x="516" y="282" width="16" height="16" rx="2"/><rect x="516" y="310" width="16" height="16" rx="2"/>
+            </g>
+            <g fill="#3a4170" stroke="#262c52">
+              <rect x="516" y="124" width="16" height="16" rx="2"/><rect x="516" y="148" width="16" height="16" rx="2"/><rect x="516" y="172" width="16" height="16" rx="2"/>
+              <rect x="516" y="226" width="16" height="16" rx="2"/>
+            </g>
+            <g font-size="15" font-weight="700" fill="#e8ebff" text-anchor="end">
+              <text x="220" y="114">VIN / 5V</text><text x="220" y="164">GND</text><text x="220" y="214">IO26</text><text x="220" y="264">IO25</text>
+            </g>
+            <g font-size="15" font-weight="700" fill="#e8ebff">
+              <text x="544" y="114">5V</text>
+              <text x="544" y="268">GND</text><text x="544" y="296">SDA · IO32</text><text x="544" y="324">SCL · IO25</text>
+            </g>
+            <g font-size="13" fill="#5f6796">
+              <text x="544" y="137">GND · not used</text><text x="544" y="161">TX · not used</text><text x="544" y="185">RX · not used</text>
+              <text x="544" y="239">3V3</text>
+            </g>
+            <text x="574" y="239" font-size="13" font-weight="700" fill="#ff6b6b">leave free</text>
+            <text class="pxl" x="380" y="96" font-size="8" fill="#ff6b6b" text-anchor="middle">5 V FROM USB</text>
+            <text class="pxl" x="380" y="350" font-size="7" fill="#6f78a8" text-anchor="middle">3.3 V SIGNALS ON BOTH BOARDS</text>
+          </svg>
+        <figcaption>Connect by the <strong>labels</strong> printed on your boards: the bridge pins may be marked <code>D25</code>/<code>D26</code> or <code>G25</code>/<code>G26</code>, and <code>VIN</code> may be marked <code>5V</code>. Leave the I2C header's <code>3V3</code> pin free.</figcaption>
+      </figure>
+
+      <div class="notice notice-info" style="margin-bottom:2rem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
+        <div>
+          <strong>Power comes from the CYD</strong>
+          <p>The bridge takes 5 V from the CYD's 4-pin <b>serial header</b>, which carries the power of the CYD's USB-C port. Don't use the 3V3 pin instead: the CYD's small 3.3 V regulator already powers the CYD and its backlight, and the extra load could overheat it and reset the CYD. On battery, the serial header has no 5 V. In that case, power the bridge from its own USB-C port with a power bank, and don't connect the 5V wire. Use one power source for the bridge, not both.</p>
+        </div>
+      </div>
+
+      <div class="flash-grid">
+        <div>
+          <ol class="steps">
+            <li><div>
+              <h3>Get an ESP32 dev board</h3>
+              <p>Any <strong>ESP32-WROOM-32</strong> board: “ESP32 DevKit”, “NodeMCU-32S”, CH340 or CP2102, USB-C or micro-USB. Not an ESP32-S3 or C3: they lack the Classic Bluetooth that PlayStation and Switch controllers use.</p>
+            </div></li>
+            <li><div>
+              <h3>Flash the bridge first</h3>
+              <p>Plug the <strong>bridge board</strong> (not the CYD) into your computer and install with the button on the right. Tick <strong>Erase device</strong>. Then unplug it.</p>
+            </div></li>
+            <li><div>
+              <h3>Wire it to the CYD</h3>
+              <p>Four wires, as in the picture: 5V from the serial header, plus GND, SDA and SCL from the I2C header. A wired Wii controller can't be connected at the same time.</p>
+            </div></li>
+            <li><div>
+              <h3>Pair your controller</h3>
+              <p>Power the CYD over USB. The bridge searches by itself; on most boards its blue LED blinks. Put the controller in pairing mode. On a PS5 or PS4 pad, hold <kbd>Create</kbd> (or <kbd>Share</kbd>) and <kbd>PS</kbd> until the light flashes. Next time, just press <kbd>PS</kbd>.</p>
+            </div></li>
+            <li><div>
+              <h3>Play</h3>
+              <p><strong>PAD</strong> appears in the top-right corner of the CYD. Circle = A, Cross = B, Options = START, Create = SELECT, PS = menu.</p>
+            </div></li>
+          </ol>
+          <p class="small muted" style="margin-top:1.4rem">Xbox, Switch Pro and 8BitDo pairing, the full button table and troubleshooting are in the <a href="guide.html#bluetooth">guide</a>.</p>
+        </div>
+
+        <div class="flasher" id="bridge-flasher">
+          <div class="flasher-title">
+            <h3>BRIDGE INSTALLER</h3>
+            <span class="led" id="br-led" role="status">Checking firmware…</span>
+          </div>
+
+          <div class="notice notice-warn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 21h20z"/><path d="M12 10v5M12 18h.01"/></svg>
+            <div>
+              <strong>Connect the bridge board, not your CYD</strong>
+              <p>Both are ESP32 boards, so the installer can't tell them apart. If you flash this onto the CYD by mistake, just install RetroCYD again above.</p>
+            </div>
+          </div>
+
+          <dl class="build-info" aria-label="Bridge firmware">
+            <div><dt>Firmware</dt><dd>BlueRetro v25.04</dd></div>
+            <div><dt>Build</dt><dd>Wii extension</dd></div>
+            <div><dt>Licence</dt><dd><a href="firmware/bridge/LICENSE-BlueRetro.txt">Apache-2.0</a></dd></div>
+          </dl>
+
+          <div class="install-area">
+            <esp-web-install-button id="br-install-btn" hidden>
+              <button slot="activate" class="btn" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
+                Connect &amp; install bridge
+              </button>
+              <span slot="unsupported">Your browser can't flash ESP boards. Use desktop Chrome, Edge or Opera.</span>
+              <span slot="not-allowed">Flashing only works on HTTPS pages or localhost.</span>
+            </esp-web-install-button>
+            <button class="btn" id="br-install-placeholder" type="button" disabled>Checking firmware…</button>
+            <p class="install-status" id="br-install-status" aria-live="polite"></p>
+            <div class="dl-row" id="br-dl-row" hidden>
+              <a id="br-dl-bin" href="firmware/bridge/blueretro-wii-extension-merged.bin" download>⬇ Download merged .bin</a>
+              <a href="firmware/bridge/README.txt" class="small">README</a>
+              <span class="small muted">flash at offset 0x0</span>
+            </div>
+          </div>
+
+          <p class="safe-line">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg>
+            <span>Writes the flash chip only, never eFuses. The bridge runs <a href="https://github.com/darthcloud/BlueRetro">BlueRetro</a> by Jacques Gagnon, unmodified. RetroCYD isn't affiliated with BlueRetro.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ============================================================ QUICK START -->
   <section class="section" id="quick-start" aria-labelledby="qs-title">
     <div class="container">
@@ -480,7 +623,7 @@
               <div class="meter-bar"><i style="width:100%"></i></div>
             </div>
             <ul class="small muted" style="margin-top:1.2rem">
-              <li><strong>Touch:</strong> the E32R40T panel is resistive and single-touch — fine for menus, puzzle and turn-based games. For platformers and shooters, plug in a <a href="guide.html#controller">wired controller</a>.</li>
+              <li><strong>Touch:</strong> the E32R40T panel is resistive and single-touch — fine for menus, puzzle and turn-based games. For platformers and shooters, plug in a <a href="guide.html#controller">wired controller</a> or use a <a href="#bluetooth">Bluetooth pad</a>.</li>
               <li><strong>ROM size:</strong> max 2 MB. Typical homebrew is far smaller; the few 4 MB and 8 MB Game Boy Color titles won't fit.</li>
               <li><strong>Game switching:</strong> a couple of seconds to copy a new ROM into flash; relaunching the same game is instant.</li>
             </ul>
@@ -539,7 +682,6 @@
           <h2 id="roadmap-title">Roadmap</h2>
           <p class="muted">Ideas we're working towards. None of these are in the firmware yet — no promises on dates.</p>
           <ul class="roadmap">
-            <li><span class="badge badge-info">Planned</span><div><strong>Bluetooth gamepads</strong><span>Wireless controllers, so you don't need the I2C adapter.</span></div></li>
             <li><span class="badge badge-info">Planned</span><div><strong>Sega Master System / Game Gear</strong><span>Two more 8-bit systems that suit this hardware.</span></div></li>
             <li><span class="badge badge-info">Planned</span><div><strong>More NES mappers</strong><span>Support for more of the less common cartridge boards.</span></div></li>
           </ul>

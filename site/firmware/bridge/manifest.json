@@ -1,0 +1,28 @@
+{
+  "name": "RetroCYD Bluetooth bridge (BlueRetro v25.04, Wii extension)",
+  "version": "v25.04",
+  "new_install_prompt_erase": true,
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        {
+          "path": "bootloader.bin",
+          "offset": 4096
+        },
+        {
+          "path": "partition-table.bin",
+          "offset": 32768
+        },
+        {
+          "path": "ota_data_initial.bin",
+          "offset": 53248
+        },
+        {
+          "path": "BlueRetro_hw1_wii_extension.bin",
+          "offset": 65536
+        }
+      ]
+    }
+  ]
+}
