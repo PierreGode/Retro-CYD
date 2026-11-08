@@ -64,8 +64,8 @@
         </div>
         <ul class="hero-meta" aria-label="At a glance">
           <li>NES · GB · GBC · CHIP-8</li>
-          <li>Touch or wired controller</li>
-          <li>Never burns eFuses</li>
+          <li>Touch, wired or Bluetooth controller</li>
+          <li>Installs from your browser</li>
         </ul>
       </div>
 
@@ -222,7 +222,7 @@
       <div class="stat" role="listitem"><b>~10K</b><span>files in a folder? Indexed in seconds, then instant</span></div>
       <div class="stat" role="listitem"><b>~1000</b><span>free homebrew games, downloaded over Wi-Fi</span></div>
       <div class="stat" role="listitem"><b>4</b><span>save-state slots per game, plus battery saves</span></div>
-      <div class="stat" role="listitem"><b>0</b><span>eFuses ever burned. Fully reversible.</span></div>
+      <div class="stat" role="listitem"><b>3</b><span>ways to play: touch, wired or Bluetooth controller</span></div>
     </div>
   </div>
 
@@ -285,7 +285,7 @@
       <div class="section-head">
         <p class="eyebrow">Web installer</p>
         <h2 id="flash-title">Flash it from your <span class="accent">browser</span></h2>
-        <p>Uses <a href="https://esphome.github.io/esp-web-tools/">ESP Web Tools</a> and the Web Serial API. Works in desktop <strong>Chrome</strong>, <strong>Edge</strong> and <strong>Opera</strong>. It only ever writes the flash chip — <a href="#safety">it never burns eFuses</a>.</p>
+        <p>Uses <a href="https://esphome.github.io/esp-web-tools/">ESP Web Tools</a> and the Web Serial API. Works in desktop <strong>Chrome</strong>, <strong>Edge</strong> and <strong>Opera</strong>.</p>
       </div>
 
       <div class="flash-grid">
@@ -372,10 +372,6 @@
             </div>
           </div>
 
-          <p class="safe-line">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg>
-            <span>Writes the SPI flash chip only. No eFuses, no secure boot, no flash encryption. Always recoverable — <a href="#safety">here's why</a>.</span>
-          </p>
         </div>
       </div>
     </div>
@@ -515,10 +511,7 @@
             </div>
           </div>
 
-          <p class="safe-line">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg>
-            <span>Writes the flash chip only, never eFuses. The bridge runs <a href="https://github.com/darthcloud/BlueRetro">BlueRetro</a> by Jacques Gagnon, unmodified. RetroCYD isn't affiliated with BlueRetro.</span>
-          </p>
+          <p class="small muted" style="margin:0">The bridge runs <a href="https://github.com/darthcloud/BlueRetro">BlueRetro</a> by Jacques Gagnon, unmodified. RetroCYD isn't affiliated with BlueRetro.</p>
         </div>
       </div>
     </div>
@@ -647,28 +640,6 @@
             <p class="small muted">These are worst cases with every pixel changing. RetroCYD only sends the rows that changed, starts sending while the frame is still being emulated, and while the picture scrolls updates every other line per frame (Settings › Smooth motion), which halves the data.</p>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================ SAFETY -->
-  <section class="section-tight" id="safety" aria-labelledby="safety-title">
-    <div class="container">
-      <div class="safety">
-        <p class="eyebrow" style="color:var(--green)">Hard rule</p>
-        <h2 id="safety-title">We never burn fuses.</h2>
-        <p class="lead">The ESP32 has one-time-programmable <strong>eFuses</strong> for things like secure boot and flash encryption. Burning them is permanent. RetroCYD never goes near them — not the web flasher, not the CI build, not the firmware.</p>
-        <div class="vs">
-          <div class="yes">
-            <h3><span class="badge badge-primary">Safe</span> “Erase device”</h3>
-            <p class="muted">Wipes the 4 MB SPI <em>flash chip</em>: old firmware, RetroCYD settings and the ROM cache. Your games and saves on the SD card are untouched. 100% reversible — just flash again.</p>
-          </div>
-          <div class="never">
-            <h3><span class="badge badge-no">Never</span> Burning eFuses</h3>
-            <p class="muted">Permanent changes inside the ESP32 chip itself. Secure boot and flash encryption are <strong>disabled</strong> in our build and nothing is ever run through <code>espefuse</code>.</p>
-          </div>
-        </div>
-        <p class="muted" style="margin:0">Flashing manually? Only ever use <code>esptool.py --chip esp32 write_flash 0x0 retrocyd-cyd40-merged.bin</code>. Full details, recovery steps and the list of commands to avoid are in the <a href="guide.html#safety">guide</a>.</p>
       </div>
     </div>
   </section>
