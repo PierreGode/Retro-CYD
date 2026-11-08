@@ -7,8 +7,5 @@ about 1,000 free homebrew games downloadable over Wi-Fi.
 **Flash it from your browser, read the guide and find free, legal games:**
 <https://pierregode.github.io/Retro-CYD/>
 
-RetroCYD never burns eFuses: the web flasher only writes the flash chip, and flashing is fully
-reversible.
-
 This repository holds the published website (`site/`) and is updated automatically by the RetroCYD
 build pipeline. Found a problem or have an idea? [Open an issue](https://github.com/PierreGode/Retro-CYD/issues).

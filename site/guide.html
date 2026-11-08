@@ -54,7 +54,7 @@
         <ol>
           <li><a href="#hardware">1. Hardware</a></li>
           <li><a href="#flashing">2. Flashing</a></li>
-          <li><a href="#safety">3. Safety &amp; recovery</a></li>
+          <li><a href="#safety">3. Erasing &amp; recovery</a></li>
           <li><a href="#sd-card">4. SD card</a></li>
           <li><a href="#launcher">5. Launcher &amp; library</a></li>
           <li><a href="#controls">6. Controls</a></li>
@@ -118,7 +118,7 @@
           <li>Open this site in desktop <strong>Chrome</strong>, <strong>Edge</strong> or <strong>Opera</strong> (Windows, macOS, Linux, ChromeOS). Firefox, Safari and mobile browsers don't support Web Serial.</li>
           <li>On the <a href="index.html#flash">flasher</a>, pick your board.</li>
           <li>Click <strong>Connect &amp; install</strong> and choose the serial port — usually named <em>USB-SERIAL CH340</em>, <em>USB Serial</em> or <em>wchusbserial</em>.</li>
-          <li>Click <strong>Install</strong>. On a first install, tick <strong>Erase device</strong> (safe — see <a href="#safety">Safety</a>).</li>
+          <li>Click <strong>Install</strong>. On a first install, tick <strong>Erase device</strong>. It clears the board, not your SD card (see <a href="#safety">Erasing</a>).</li>
           <li>Wait for the progress bar to finish. The board reboots into RetroCYD.</li>
         </ol>
         <div class="notice notice-info">
@@ -136,33 +136,14 @@
         <p class="muted">Only one program can use a serial port at a time: close Arduino IDE / PlatformIO serial monitors and other flashing tools first.</p>
       </section>
 
-      <!-- ===================================================== 3 SAFETY -->
+      <!-- ===================================================== 3 ERASING & RECOVERY -->
       <section id="safety" aria-labelledby="h-safety">
-        <h2 id="h-safety"><span class="num">03</span> Safety &amp; recovery</h2>
-        <div class="notice notice-ok">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg>
-          <div><strong>The rule: never burn fuses.</strong><p>The web flasher and the CI build only ever write the SPI flash chip. No eFuses are burned. Secure boot and flash encryption are disabled in the build. Nothing is ever run through <code>espefuse</code>.</p></div>
-        </div>
-
-        <h3>Flash vs. eFuses — what's the difference?</h3>
-        <p>The ESP32 has two very different kinds of storage:</p>
-        <div class="table-wrap">
-          <table class="data">
-            <thead><tr><th scope="col"></th><th scope="col">SPI flash (what we write)</th><th scope="col">eFuses (never touched)</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">What it is</th><td>A separate 4 MB chip holding the bootloader, firmware, settings and ROM cache.</td><td>One-time-programmable bits inside the ESP32 itself (MAC address, security settings, flash voltage…).</td></tr>
-              <tr><th scope="row">Can it be undone?</th><td><strong>Yes.</strong> Rewrite or erase it as often as you like.</td><td><strong>No.</strong> A burned eFuse bit stays burned forever.</td></tr>
-              <tr><th scope="row">What can go wrong</th><td>Worst case: wrong firmware, white screen. Flash again and it's fixed.</td><td>Wrong burn can lock out flashing or permanently brick the chip.</td></tr>
-              <tr><th scope="row">Touched by RetroCYD?</th><td>Yes — that's how firmware is installed.</td><td>Never. Not by the web flasher, the CI build or the firmware.</td></tr>
-            </tbody>
-          </table>
-        </div>
-
+        <h2 id="h-safety"><span class="num">03</span> Erasing &amp; recovery</h2>
         <h3>What does “Erase device” do?</h3>
         <p>When the web installer asks whether to erase, it means <strong>erase the flash chip</strong> before writing. That clears old firmware, RetroCYD's settings (volume, brightness, calibration…) and the ROM cache. <strong>Your SD card — games and saves — is not touched.</strong> It's fully reversible: the next install puts everything back, and settings return to defaults. Erasing is recommended on a first install or when switching from other firmware.</p>
 
         <h3>Why the board can always be recovered</h3>
-        <p>The ESP32's first-stage bootloader lives in mask ROM inside the chip and can't be overwritten by flashing. Holding <kbd>BOOT</kbd> (IO0) at reset always enters its download mode — as long as no eFuses have been burned to disable it, which RetroCYD never does. So whatever happens to the flash contents, you can flash again.</p>
+        <p>The ESP32 has a built-in bootloader in its ROM, which flashing can't overwrite. Holding <kbd>BOOT</kbd> (IO0) at reset always starts its download mode, so whatever happens to the firmware, you can flash again.</p>
 
         <h3 id="recovery">Recovery steps</h3>
         <ol>
@@ -173,27 +154,14 @@
         </ol>
 
         <h3 id="manual-flash">Manual flashing with esptool</h3>
-        <p>Prefer the command line? Download the merged <code>.bin</code> from the <a href="index.html#flash">flasher panel</a>, install <a href="https://docs.espressif.com/projects/esptool/en/latest/esp32/">esptool</a> (<code>pip install esptool</code>) and run <strong>only</strong> this:</p>
+        <p>Prefer the command line? Download the merged <code>.bin</code> from the <a href="index.html#flash">flasher panel</a>, install <a href="https://docs.espressif.com/projects/esptool/en/latest/esp32/">esptool</a> (<code>pip install esptool</code>) and run:</p>
         <pre data-copy="esptool.py --chip esp32 write_flash 0x0 retrocyd-cyd40-merged.bin"><code><span class="p">$ </span>esptool.py --chip esp32 write_flash 0x0 retrocyd-cyd40-merged.bin</code></pre>
         <ul>
           <li>Add <code>--port COM5</code> (Windows) or <code>--port /dev/ttyUSB0</code> (Linux) after <code>--chip esp32</code> if esptool picks the wrong port.</li>
-          <li>For a clean slate first, <code>esptool.py --chip esp32 erase_flash</code> is the same as the web installer's “Erase device” — flash only, still safe.</li>
+          <li>For a clean slate first, <code>esptool.py --chip esp32 erase_flash</code> is the same as the web installer's “Erase device”.</li>
           <li>Newer esptool releases also accept the spelling <code>esptool --chip esp32 write-flash 0x0 …</code>; it's the same command.</li>
           <li>The image is a single merged file that goes at offset <code>0x0</code>. Don't split it or use other offsets.</li>
         </ul>
-        <div class="notice notice-danger">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></svg>
-          <div>
-            <strong>Never run these on your board</strong>
-            <p>Nothing in RetroCYD needs them, and they make permanent changes:</p>
-            <ul>
-              <li><code>espefuse.py burn_efuse</code>, <code>burn_key</code>, <code>burn_key_digest</code>, <code>burn_bit</code>, <code>burn_block_data</code>, <code>burn_custom_mac</code> — or any other <code>burn_*</code> command</li>
-              <li><code>espefuse.py set_flash_voltage</code>, <code>write_protect_efuse</code>, <code>read_protect_efuse</code></li>
-              <li>Enabling <em>Secure Boot</em> or <em>Flash Encryption</em> if you build firmware yourself</li>
-            </ul>
-            <p>If a guide, script or tool asks you to do any of the above for RetroCYD, it's wrong.</p>
-          </div>
-        </div>
       </section>
 
       <!-- ===================================================== 4 SD CARD -->
@@ -573,7 +541,7 @@
           <li>If a new version fails to start, the bootloader goes back to the previous one and RetroCYD tells you on the next start.</li>
           <li>The rare update that changes the flash layout can't be installed over Wi-Fi; RetroCYD then asks you to use the <a href="index.html#flash">web flasher</a> instead. The web flasher can always reinstall RetroCYD.</li>
         </ul>
-        <p><strong>About the stored password:</strong> the Wi-Fi password is saved in the board's settings area <em>without encryption</em>. Encrypting flash on an ESP32 means burning eFuses, which RetroCYD never does. Anyone holding the board could read it, so a guest network is a good idea.</p>
+        <p><strong>About the stored password:</strong> the Wi-Fi password is saved in the board's settings area <em>without encryption</em>. Anyone holding the board could read it, so a guest network is a good idea.</p>
         <p class="muted">2.4 GHz networks only (the ESP32 has no 5 GHz radio). WPA2 and WPA3 personal networks and open networks work; enterprise (802.1X) networks and hotel-style sign-in pages don't.</p>
       </section>
 
@@ -731,7 +699,7 @@
           </details>
           <details>
             <summary>Can flashing brick my board?</summary>
-            <div class="a"><p>No. The flasher only writes the flash chip and never burns eFuses, so the ESP32's ROM bootloader is always there to flash again. See <a href="#safety">Safety &amp; recovery</a>.</p></div>
+            <div class="a"><p>No. Flashing only rewrites the firmware, and the ESP32's built-in bootloader is always there to flash again. See <a href="#safety">Erasing &amp; recovery</a>.</p></div>
           </details>
           <details>
             <summary>Will “Erase device” delete my games or saves?</summary>
