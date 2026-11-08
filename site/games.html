@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Free &amp; Legal Games — RetroCYD</title>
-  <meta name="description" content="Where to get free and legal NES, Game Boy, Game Boy Color and CHIP-8 games for RetroCYD: homebrew archives, game jams, public-domain collections and backing up your own cartridges.">
+  <meta name="description" content="Where to get free and legal NES, Game Boy, Game Boy Color, Master System, Game Gear and CHIP-8 games for RetroCYD: homebrew archives, game jams, public-domain collections and backing up your own cartridges.">
   <meta name="theme-color" content="#06070f">
   <link rel="canonical" href="https://pierregode.github.io/Retro-CYD/games.html">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
@@ -43,7 +43,7 @@
     <div class="container">
       <p class="eyebrow">Insert coin? No need.</p>
       <h1 id="games-title">Free &amp; <span class="accent">legal</span> games</h1>
-      <p class="lead">People are still making brand-new games for the NES, Game Boy and CHIP-8 — thousands of them, many free. Here's where to find them, how to tell what you're allowed to do with them, and how to get them onto your RetroCYD.</p>
+      <p class="lead">People are still making brand-new games for the NES, Game Boy, Sega Master System, Game Gear and CHIP-8 — thousands of them, many free. Here's where to find them, how to tell what you're allowed to do with them, and how to get them onto your RetroCYD.</p>
       <div class="btn-row" style="margin-top:1.4rem">
         <a class="btn" href="#auto">Download over Wi-Fi</a>
         <a class="btn btn-ghost" href="#sources">Browse sources</a>
@@ -96,6 +96,8 @@
           <button class="chip" type="button" data-cat="nes" aria-pressed="false">NES</button>
           <button class="chip" type="button" data-cat="gb" aria-pressed="false">GAME BOY</button>
           <button class="chip" type="button" data-cat="gbc" aria-pressed="false">GB COLOR</button>
+          <button class="chip" type="button" data-cat="sms" aria-pressed="false">MASTER SYSTEM</button>
+          <button class="chip" type="button" data-cat="gg" aria-pressed="false">GAME GEAR</button>
           <button class="chip" type="button" data-cat="chip8" aria-pressed="false">CHIP-8</button>
           <input class="cat-search" id="cat-search" type="search" placeholder="Search title or author" aria-label="Search games by title or author">
         </div>
@@ -107,7 +109,7 @@
           </table>
         </div>
         <p id="cat-status" class="visually-hidden" aria-live="polite"></p>
-        <p class="muted small">Sources: <a href="https://hh.gbdev.io/">Homebrew Hub</a> (the community NES and Game Boy homebrew databases) and the <a href="https://github.com/JohnEarnest/chip8Archive">CHIP-8 Archive</a> (all CC0). “free download” means the author published the game for free without naming a licence: enjoy it, and ask the author before sharing copies. Authors who want a game removed can ask the source database; the list here is rebuilt from it every week.</p>
+        <p class="muted small">Sources: <a href="https://hh.gbdev.io/">Homebrew Hub</a> (the community NES and Game Boy homebrew databases), <a href="https://www.smspower.org/Homebrew/Index">SMS Power!</a> (Master System and Game Gear homebrew) and the <a href="https://github.com/JohnEarnest/chip8Archive">CHIP-8 Archive</a> (all CC0). “free download” means the author published the game for free without naming a licence: enjoy it, and ask the author before sharing copies. Authors who want a game removed can ask the source database; the list here is rebuilt from it every week.</p>
       </div>
     </div>
   </section>
@@ -127,6 +129,8 @@
         <button class="chip" type="button" data-filter="nes" aria-pressed="false">NES</button>
         <button class="chip" type="button" data-filter="gb" aria-pressed="false">GAME BOY</button>
         <button class="chip" type="button" data-filter="gbc" aria-pressed="false">GB COLOR</button>
+        <button class="chip" type="button" data-filter="sms" aria-pressed="false">MASTER SYSTEM</button>
+        <button class="chip" type="button" data-filter="gg" aria-pressed="false">GAME GEAR</button>
         <button class="chip" type="button" data-filter="chip8" aria-pressed="false">CHIP-8</button>
       </div>
       <p id="filter-status" class="visually-hidden" aria-live="polite"></p>
@@ -141,6 +145,17 @@
           <ul class="links">
             <li><a href="https://hh.gbdev.io/">Browse Homebrew Hub</a></li>
             <li><a href="https://github.com/gbdev/database">Database on GitHub</a></li>
+          </ul>
+        </article>
+
+        <article class="card source" data-systems="sms gg">
+          <h3>SMS Power! <span class="host">smspower.org</span></h3>
+          <ul class="tags" aria-label="Systems"><li><span class="tag tag-sms">SMS</span></li><li><span class="tag tag-gg">GG</span></li></ul>
+          <p>The home of Sega 8-bit homebrew since the 1990s: hundreds of Master System and Game Gear games, many from its yearly coding competition, each with screenshots and often source code.</p>
+          <p class="lic">Authors publish their games there as free downloads; most don't name a licence, so ask the author before re-sharing files. RetroCYD's game download fetches the Master System and Game Gear games straight from SMS Power.</p>
+          <ul class="links">
+            <li><a href="https://www.smspower.org/Homebrew/Index">Browse the homebrew list</a></li>
+            <li><a href="https://www.smspower.org/Competitions/Index">Coding competitions</a></li>
           </ul>
         </article>
 

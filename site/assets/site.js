@@ -388,7 +388,7 @@
     var summary = $("#cat-summary", root), body = $("#cat-body", root), search = $("#cat-search", root);
     var filters = $(".cat-filters", root), wrap = $(".cat-wrap", root), status = $("#cat-status", root);
     var chips = $all(".chip[data-cat]", root);
-    var NAMES = { nes: "NES", gb: "Game Boy", gbc: "Game Boy Color", chip8: "CHIP-8" };
+    var NAMES = { nes: "NES", gb: "Game Boy", gbc: "Game Boy Color", chip8: "CHIP-8", sms: "Master System", gg: "Game Gear" };
     var games = [], sys = "all", timer = null;
 
     function render() {
@@ -430,7 +430,7 @@
       var lines = text.split("\n");
       var head = (lines[0] || "").split("\t");
       if (head[0] !== "#RETROCYD-CATALOG") throw new Error("not a catalog");
-      var count = { nes: 0, gb: 0, gbc: 0, chip8: 0 }, bytes = 0;
+      var count = { nes: 0, gb: 0, gbc: 0, chip8: 0, sms: 0, gg: 0 }, bytes = 0;
       lines.slice(1).forEach(function (l) {
         var f = l.split("\t");
         if (f.length < 9 || !NAMES[f[0]]) return;
@@ -441,7 +441,8 @@
       });
       games.sort(function (a, b) { return a.title.localeCompare(b.title); });
       setText(summary, games.length + " free games: " + count.nes + " NES, " + count.gb + " Game Boy, " +
-        count.gbc + " Game Boy Color, " + count.chip8 + " CHIP-8 (" + (bytes / 1048576).toFixed(0) +
+        count.gbc + " Game Boy Color, " + count.sms + " Master System, " + count.gg + " Game Gear, " +
+        count.chip8 + " CHIP-8 (" + (bytes / 1048576).toFixed(0) +
         " MB). Updated " + fmtDate(head[2]) + ".");
       chips.forEach(function (ch) {
         ch.addEventListener("click", function () {

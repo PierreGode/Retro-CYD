@@ -433,6 +433,8 @@ strong { color: #fff; }
 .tag-gb { color: #c8ffd9; border-color: rgba(93, 255, 158, .45); background: rgba(93, 255, 158, .08); }
 .tag-gbc { color: #c9fbff; border-color: rgba(62, 240, 255, .45); background: rgba(62, 240, 255, .08); }
 .tag-chip8 { color: #fff0bf; border-color: rgba(255, 210, 63, .5); background: rgba(255, 210, 63, .08); }
+.tag-sms { color: #bfe9ff; border-color: rgba(56, 189, 248, .5); background: rgba(56, 189, 248, .08); }
+.tag-gg { color: #bff7ee; border-color: rgba(45, 212, 191, .5); background: rgba(45, 212, 191, .08); }
 
 /* ---------- notices ---------- */
 .notice {

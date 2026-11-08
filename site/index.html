@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>RetroCYD — retro game firmware for the ESP32 Cheap Yellow Display</title>
-  <meta name="description" content="RetroCYD is free firmware that turns the 4.0&quot; ESP32 Cheap Yellow Display into a pocket retro console for NES, Game Boy, Game Boy Color and CHIP-8 homebrew. Flash it straight from your browser.">
+  <meta name="description" content="RetroCYD is free firmware that turns the 4.0&quot; ESP32 Cheap Yellow Display into a pocket retro console for NES, Game Boy, Game Boy Color, Master System, Game Gear and CHIP-8 homebrew. Flash it straight from your browser.">
   <meta name="theme-color" content="#06070f">
   <link rel="canonical" href="https://pierregode.github.io/Retro-CYD/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="RetroCYD — a pocket retro console from a Cheap Yellow Display">
-  <meta property="og:description" content="Free NES, Game Boy, Game Boy Color and CHIP-8 emulator firmware for the ESP32 CYD 4.0&quot; touch board. Flash it from your browser.">
+  <meta property="og:description" content="Free NES, Game Boy, Game Boy Color, Master System, Game Gear and CHIP-8 emulator firmware for the ESP32 CYD 4.0&quot; touch board. Flash it from your browser.">
   <meta property="og:url" content="https://pierregode.github.io/Retro-CYD/">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -54,7 +54,7 @@
         <p class="eyebrow">Free firmware · ESP32 · 4.0″ CYD</p>
         <h1 id="hero-title"><span class="logo-retro">RETRO</span><span class="logo-cyd">CYD</span></h1>
         <p class="tagline">Turn a <em>Cheap Yellow Display</em> into a pocket retro console.</p>
-        <p class="lead">Free firmware for the 4.0″ ESP32 touch board that plays NES, Game Boy, Game Boy Color and CHIP-8 homebrew from a microSD card. Flash it straight from your browser — no toolchain, no command line.</p>
+        <p class="lead">Free firmware for the 4.0″ ESP32 touch board that plays NES, Game Boy, Game Boy Color, Sega Master System, Game Gear and CHIP-8 homebrew from a microSD card. Flash it straight from your browser — no toolchain, no command line.</p>
         <div class="btn-row">
           <a class="btn" href="#flash">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
@@ -63,7 +63,7 @@
           <a class="btn btn-ghost" href="games.html">Find free games</a>
         </div>
         <ul class="hero-meta" aria-label="At a glance">
-          <li>NES · GB · GBC · CHIP-8</li>
+          <li>NES · GB · GBC · SMS · GG · CHIP-8</li>
           <li>Touch, wired or Bluetooth controller</li>
           <li>Installs from your browser</li>
         </ul>
@@ -72,7 +72,7 @@
       <div class="board-wrap">
         <svg class="board-svg" viewBox="0 0 600 420" role="img" aria-labelledby="board-title board-desc">
           <title id="board-title">The 4.0-inch ESP32 board running the RetroCYD launcher</title>
-          <desc id="board-desc">A yellow circuit board with a 480 by 320 screen. The screen shows the RetroCYD launcher: four system tiles (NES, Game Boy, Game Boy Color, CHIP-8), a recently played list, and an A to Z quick-jump bar on the right edge.</desc>
+          <desc id="board-desc">A yellow circuit board with a 480 by 320 screen. The screen shows the RetroCYD launcher: system tiles (NES, Game Boy, Game Boy Color, CHIP-8), a recently played list, and an A to Z quick-jump bar on the right edge.</desc>
           <defs>
             <linearGradient id="pcb" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0" stop-color="#ffdd55"/>
@@ -218,9 +218,9 @@
   <!-- ============================================================ STATS -->
   <div class="container">
     <div class="stats" role="list" aria-label="RetroCYD in numbers">
-      <div class="stat" role="listitem"><b>4</b><span>systems: NES, Game Boy, Game Boy Color, CHIP-8</span></div>
+      <div class="stat" role="listitem"><b>6</b><span>systems: NES, Game Boy, Game Boy Color, Master System, Game Gear, CHIP-8</span></div>
       <div class="stat" role="listitem"><b>~10K</b><span>files in a folder? Indexed in seconds, then instant</span></div>
-      <div class="stat" role="listitem"><b>~1000</b><span>free homebrew games, downloaded over Wi-Fi</span></div>
+      <div class="stat" role="listitem"><b>~1300</b><span>free homebrew games, downloaded over Wi-Fi</span></div>
       <div class="stat" role="listitem"><b>4</b><span>save-state slots per game, plus battery saves</span></div>
       <div class="stat" role="listitem"><b>3</b><span>ways to play: touch, wired or Bluetooth controller</span></div>
     </div>
@@ -237,8 +237,8 @@
       <div class="grid grid-4">
         <article class="card y">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2h9l3 3v17H6z"/><path d="M9 6h6v6H9z"/><path d="M9 16h6"/></svg></div>
-          <h3>Four systems</h3>
-          <p>NES (Famicom), Game Boy, Game Boy Color and CHIP-8 / SUPER-CHIP — all in one firmware.</p>
+          <h3>Six systems</h3>
+          <p>NES (Famicom), Game Boy, Game Boy Color, Sega Master System, Game Gear and CHIP-8 / SUPER-CHIP — all in one firmware.</p>
         </article>
         <article class="card">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h11M4 12h11M4 18h11"/><path d="M20 4v16"/><path d="M18 8h4M18 14h4"/></svg></div>
@@ -273,7 +273,7 @@
         <article class="card g">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8.5a15 15 0 0 1 20 0"/><path d="M5.5 12a10 10 0 0 1 13 0"/><path d="M9 15.5a5 5 0 0 1 6 0"/><path d="M12 19h.01"/></svg></div>
           <h3>Free games over Wi-Fi</h3>
-          <p>Pick your Wi-Fi in Settings and RetroCYD downloads about 1,000 free homebrew games from <a href="games.html#auto">Homebrew Hub and the CHIP-8 Archive</a> — automatically at startup, or when you tap “Download now”. Each file is checked before it's kept. Firmware updates install over Wi-Fi too.</p>
+          <p>Pick your Wi-Fi in Settings and RetroCYD downloads about 1,300 free homebrew games from <a href="games.html#auto">Homebrew Hub, the CHIP-8 Archive and SMS Power!</a> — automatically at startup, or when you tap “Download now”. Each file is checked before it's kept. Firmware updates install over Wi-Fi too.</p>
         </article>
       </div>
     </div>
@@ -553,7 +553,7 @@
         <p class="eyebrow">Compatibility</p>
         <h2 id="systems-title">What runs — and what <span class="accent">can't</span></h2>
       </div>
-      <div class="grid grid-4" style="margin-bottom:2.2rem">
+      <div class="grid grid-3" style="margin-bottom:2.2rem">
         <article class="card sys ok">
           <span class="sys-name" style="color:#ffc2de">NES</span>
           <p>Nintendo Entertainment System / Famicom. Full speed with automatic frame-skip. Mappers 0–4, 7, 9–11, 66 and 71 (NROM, MMC1, UxROM, CNROM, MMC3, AxROM, MMC2/4 and more).</p>
@@ -573,6 +573,16 @@
           <span class="sys-name" style="color:#fff0bf">CHIP-8</span>
           <p>CHIP-8 and SUPER-CHIP programs. Runs trivially fast.</p>
           <span class="ext">/roms/chip8 · .ch8 .c8 .sc8 .zip</span>
+        </article>
+        <article class="card sys ok">
+          <span class="sys-name" style="color:#bfe9ff">Master System</span>
+          <p>Sega's 8-bit console (Mark III). Full speed, Sega mapper with battery saves, and the older TMS9918 picture modes some homebrew uses. Button 1 / 2 are B / A, START is PAUSE.</p>
+          <span class="ext">/roms/sms · .sms .zip</span>
+        </article>
+        <article class="card sys ok">
+          <span class="sys-name" style="color:#bff7ee">Game Gear</span>
+          <p>Sega's colour handheld: the Master System hardware with a 160×144 screen and 4096 colours.</p>
+          <span class="ext">/roms/gg · .gg .zip</span>
         </article>
       </div>
 
@@ -612,12 +622,17 @@
               <div class="meter-bar"><i style="width:100%"></i></div>
             </div>
             <div class="meter">
+              <div class="meter-top"><span>Master System / Game Gear — game speed</span><span>target 60 Hz</span></div>
+              <div class="meter-bar"><i style="width:100%"></i></div>
+            </div>
+            <div class="meter">
               <div class="meter-top"><span>CHIP-8 / SUPER-CHIP</span><span>trivially fast</span></div>
               <div class="meter-bar"><i style="width:100%"></i></div>
             </div>
             <ul class="small muted" style="margin-top:1.2rem">
               <li><strong>Touch:</strong> the E32R40T panel is resistive and single-touch — fine for menus, puzzle and turn-based games. For platformers and shooters, plug in a <a href="guide.html#controller">wired controller</a> or use a <a href="#bluetooth">Bluetooth pad</a>.</li>
               <li><strong>ROM size:</strong> max 2 MB. Typical homebrew is far smaller; the few 4 MB and 8 MB Game Boy Color titles won't fit.</li>
+              <li><strong>Master System:</strong> 60 Hz only. A few European homebrew games ask for a 50 Hz console; most let you continue anyway.</li>
               <li><strong>Game switching:</strong> a couple of seconds to copy a new ROM into flash; relaunching the same game is instant.</li>
             </ul>
           </div>
